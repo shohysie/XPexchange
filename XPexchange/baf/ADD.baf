@@ -1,0 +1,199 @@
+IF
+	!NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",1)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH0A",LastTalkedToBy())	//-10Wexp
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
+
+IF
+	!NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",2)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH0B",LastTalkedToBy())	//-15Wexp
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
+
+IF
+	!NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",3)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH0C",LastTalkedToBy())	//-20Wexp
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
+
+IF
+	!NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",4)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH0D",LastTalkedToBy())	//-25Wexp/超20级-30Wexp
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
+
+IF
+	!NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",5)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH0E",LastTalkedToBy())	//-40Wexp/超10级-50Wexp/超20级-15Wexp
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
+
+IF
+	NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",1)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH1A",LastTalkedToBy())	//-10Wexp *2.5
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
+
+IF
+	NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",2)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH1B",LastTalkedToBy())	//-15Wexp *2.5
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
+
+IF
+	NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",3)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH1C",LastTalkedToBy())	//-20Wexp *2.5
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
+
+IF
+	NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",4)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH1D",LastTalkedToBy())	//-25Wexp/超20级-30Wexp *2.5
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
+
+IF
+	NightmareModeOn()
+	NumTimesTalkedToGT(0)
+	Global("XPEXHANG","LOCALS",5)
+THEN
+	RESPONSE #100
+		ForceSpellRES("XPEXCH1E",LastTalkedToBy())	//-40Wexp/超10级-50Wexp/超20级-15Wexp *2.5
+		SetGlobal("XPEXHANG","LOCALS",0)
+		SmallWait(5)
+		ReallyForceSpellRES("XPEXCH04",Player1)
+		ReallyForceSpellRES("XPEXCH04",Player2)
+		ReallyForceSpellRES("XPEXCH04",Player3)
+		ReallyForceSpellRES("XPEXCH04",Player4)
+		ReallyForceSpellRES("XPEXCH04",Player5)
+		ReallyForceSpellRES("XPEXCH04",Player6)
+		ForceSpell(Myself,DRYAD_TELEPORT)
+		SmallWait(1)
+		DestroySelf()
+END
