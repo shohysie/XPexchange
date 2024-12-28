@@ -56,20 +56,33 @@ ACTION_IF (~%wishbcs1%~ STRING_COMPARE_CASE ~%wishbcs2%~ != 0) BEGIN	//相等时STR
 END
 
 //巴尔遗产模式，根据经验上限提供两种模式
-ACTION_IF xplimit < 15000000 BEGIN
+ACTION_IF (xplimit < 15000000) & (xplimit > 0) BEGIN
 	COPY_EXISTING ~XPEXCH0A.spl~ ~override/XPEXCH1A.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 104 parameter1 = "-2500000" END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-500000" END
 	COPY_EXISTING ~XPEXCH0B.spl~ ~override/XPEXCH1B.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 104 parameter1 = "-3750000" END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-750000" END
 	COPY_EXISTING ~XPEXCH0C.spl~ ~override/XPEXCH1C.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 104 parameter1 = "-5000000" END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-1000000" END
 	COPY_EXISTING ~XPEXCH0D.spl~ ~override/XPEXCH1D.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 1 match_opcode = 104 parameter1 = "-6250000" END
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 2 match_opcode = 104 parameter1 = "-7500000" END
+	FOR (index = 1; index < 28 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
+		PATCH_IF index < 15 BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-1250000" header = "%index%" END
+		END ELSE BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-1500000" header = "%index%" END
+		END
+	END
 	COPY_EXISTING ~XPEXCH0E.spl~ ~override/XPEXCH1E.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 1 match_opcode = 104 parameter1 = "-3750000" END
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 2 match_opcode = 104 parameter1 = "-10000000" END
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 3 match_opcode = 104 parameter1 = "-12500000" END
+	FOR (index = 1; index < 39 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
+		PATCH_IF index < 10 BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-2000000" header = "%index%" END
+		END ELSE BEGIN
+			PATCH_IF index < 19 BEGIN 
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-2500000" header = "%index%" END
+			END ELSE BEGIN
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-500000" header = "%index%" END
+			END
+		END
+	END
 
 	OUTER_SPRINT dlgname ~%wishdlg1%~
 	COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD0.d~
@@ -77,20 +90,35 @@ ACTION_IF xplimit < 15000000 BEGIN
 		OUTER_SPRINT dlgname ~%wishdlg2%~
 		COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD0.d~
 	END
-END ELSE BEGIN
+END ELSE BEGIN	
 	COPY_EXISTING ~XPEXCH0A.spl~ ~override/XPEXCH1A.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 104 parameter1 = "-1500000" END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-1500000" END
 	COPY_EXISTING ~XPEXCH0B.spl~ ~override/XPEXCH1B.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 104 parameter1 = "-2250000" END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-2250000" END
 	COPY_EXISTING ~XPEXCH0C.spl~ ~override/XPEXCH1C.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 104 parameter1 = "-3000000" END
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-3000000" END
 	COPY_EXISTING ~XPEXCH0D.spl~ ~override/XPEXCH1D.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 1 match_opcode = 104 parameter1 = "-3750000" END
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 2 match_opcode = 104 parameter1 = "-4500000" END
+	FOR (index = 1; index < 28 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
+		PATCH_IF header < 15 BEGIN 
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-3750000" header = "%index%" END
+		END ELSE BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-4500000" header = "%index%" END
+		END
+	END
 	COPY_EXISTING ~XPEXCH0E.spl~ ~override/XPEXCH1E.spl~
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 1 match_opcode = 104 parameter1 = "-2250000" END
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 2 match_opcode = 104 parameter1 = "-6000000" END
-	LPF ALTER_SPELL_EFFECT INT_VAR header_type = 3 match_opcode = 104 parameter1 = "-7500000" END
+	FOR (index = 1; index < 39 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
+		PATCH_IF header < 10 BEGIN 
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-5000000" header = "%index%" END
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-1000000" header = "%index%" END
+		END ELSE BEGIN
+			PATCH_IF header < 19 BEGIN 
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-5000000" header = "%index%" END
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-2500000" header = "%index%" END
+			END ELSE BEGIN
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-1500000" header = "%index%" END
+			END
+		END
+	END
 
 	OUTER_SPRINT dlgname ~%wishdlg1%~
 	COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD1.d~

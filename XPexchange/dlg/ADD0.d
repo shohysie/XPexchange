@@ -1,5 +1,6 @@
 //~%dlgname%~分有限愿望和许愿术两个法术
 //~%lvlimit%~为游戏最高人物等级
+//经验上限低，遗产模式判断要求仅+250w
 
 EXTEND_BOTTOM ~%dlgname%~ 0
 	IF ~~
