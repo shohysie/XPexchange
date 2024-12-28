@@ -9,6 +9,7 @@ AUTO_TRA ~%MOD_FOLDER%/tra/%s~
 
 LANGUAGE  ~American English~	~english~	~XPexchange/tra/english/game.tra~	~XPexchange/tra/english/setup.tra~
 LANGUAGE  ~Simplified Chinese~	~schinese~	~XPexchange/tra/schinese/game.tra~	~XPexchange/tra/schinese/setup.tra~
+LANGUAGE  ~Francais~	~french~	~XPexchange/tra/french/game.tra~	~XPexchange/tra/french/setup.tra~
 
 BEGIN @1
 REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ @2	//°æ±¾²»¶Ô
