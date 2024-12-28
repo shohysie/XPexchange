@@ -100,7 +100,7 @@ END ELSE BEGIN
 	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-3000000" END
 	COPY_EXISTING ~XPEXCH0D.spl~ ~override/XPEXCH1D.spl~
 	FOR (index = 1; index < 28 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
-		PATCH_IF header < 15 BEGIN 
+		PATCH_IF index < 15 BEGIN 
 			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-3750000" header = "%index%" END
 		END ELSE BEGIN
 			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-4500000" header = "%index%" END
@@ -108,11 +108,11 @@ END ELSE BEGIN
 	END
 	COPY_EXISTING ~XPEXCH0E.spl~ ~override/XPEXCH1E.spl~
 	FOR (index = 1; index < 39 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
-		PATCH_IF header < 10 BEGIN 
+		PATCH_IF index < 10 BEGIN 
 			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-5000000" header = "%index%" END
 			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-1000000" header = "%index%" END
 		END ELSE BEGIN
-			PATCH_IF header < 19 BEGIN 
+			PATCH_IF index < 19 BEGIN 
 				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-5000000" header = "%index%" END
 				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 3 timing = 1 parameter1 = "-2500000" header = "%index%" END
 			END ELSE BEGIN
