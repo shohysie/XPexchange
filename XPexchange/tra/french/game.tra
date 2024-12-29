@@ -21,16 +21,18 @@
 @25 = "3 millions de points."
 @26 = "4 millions de points."
 @27 = "5 millions de points."
-@28 = "Si je paye une quantité différente de points d'expérience, puis-je les échanger contre d'autres compétences ?"
-@29 = "Sélectionnez le type d'arme que vous souhaitez maîtriser."
+@28 = "Si je paye une quantité différente de points d'expérience, puis-je les échanger contre d'autres capacités ?"
+@29 = "Sélectionnez le type d'armes que vous souhaitez maîtriser."
 @30 = "Quelle capacité souhaitez-vous obtenir ?"
 @31 = "C’est entendu, procédons à cet échange..."
 @32 = "Voilà qui est fait. Au revoir et bonne chance."
 @38 = "Très bien, je m'en vais maintenant."
 @39 = "Mes équipiers ne sont pas assez expérimentés, peut-être une prochaine fois."
 @40 = "J'ai changé d'avis, peut-être une prochaine fois."
+
 @51 = "Lunettes de myopie"
 @52 = "La seule capacité de ces lunettes est de restaurer une vision normale à une personne très myope."
+
 @61 = "1,5 million de points."
 @62 = "2,25 millions de points."
 @63 = "3 millions de points."
@@ -38,6 +40,7 @@
 @65 = "4,5 millions de points."
 @66 = "6 millions de points."
 @67 = "7,5 millions de points."
+
 @71 = "2,5 millions de points."
 @72 = "3,75 millions de points."
 @73 = "5 millions de points."
@@ -45,6 +48,7 @@
 @75 = "7,5 millions de points."
 @76 = "10 millions de points."
 @77 = "12,5 millions de points."
+
 @101 = "Un bonus de 1 à la classe d'armure."
 @102 = "Un bonus de 4 à la classe d'armure contre les armes contondantes."
 @103 = "Un bonus de 4 à la classe d'armure contre les projectiles."
@@ -65,6 +69,7 @@
 @118 = "Un bonus de 5 % aux chances de coup critique. (cumulable)"
 @119 = "L'obtention de 2 emplacements de sorts profanes supplémentaires de niveau 1."
 @120 = "Un bonus de 4 au facteur de vitesse des armes."
+
 @201 = "Un bonus de 10 % aux dégâts de feu infligés."
 @202 = "Un bonus de 10 % aux dégâts de froid infligés."
 @203 = "Un bonus de 10 % aux dégâts d'électricité infligés."
@@ -85,6 +90,7 @@
 @218 = "L'atteinte de la spécialisation (2 étoiles) avec le style de combat arme épée et bouclier."
 @219 = "L'atteinte de la spécialisation (2 étoiles) avec le style de combat arme à une main."
 @220 = "L'atteinte de la grande maîtrise (5 étoiles) avec un certain type d'armes."
+
 @301 = "Une protection contre la détection."
 @302 = "Une immunité aux maladies, à la débilité mentale et à la cécité."
 @303 = "Une immunité aux armes normales."
@@ -109,6 +115,7 @@
 @322 = "Un bonus de 20 % à la résistance aux dégâts perforants."
 @323 = "Un bonus de 20 % à la résistance aux dégâts contondants."
 @324 = "Un bonus de 20 % à la résistance aux dégâts des projectiles."
+
 @401 = "Une immunité aux attaques mentales. (le charme, la domination, la peur, la rupture de moral, la folie du berserker, la confusion et le sommeil)"
 @402 = "Un bonus de 10 % à toutes les résistances élémentaires (feu, froid, électricité, acide et poison)."
 @403 = "Un bonus de 1 à la chance. (cumulable)."
@@ -123,6 +130,7 @@
 @412 = "Un bonus de 1 au multiplicateur d'attaque sournoise."
 @413 = "Que chaque coup critique étourdisse la cible pendant un round (aucun jet de sauvegarde)."
 @414 = "Que chaque attaque sournoise réussie neutralise l'adversaire (effet de maladie, ralentissement, saignement, et -2 à sa Force et Dextérité pendant 1 round. Aucun jet de sauvegarde)."
+
 @501 = "Une immunité à la mort instantanée, comprenant la pétrification, la désintégration, et les sorts tels que Doigt de mort, Cri de la banshee, etc."
 @502 = "Une immunité aux effets négatifs sur le mouvement, comprenant le ralentissement, l'étourdissement, l'immobilisation, l'enchevêtrement, la toile et la graisse."
 @503 = "L'obtention d'un emplacement de sorts profanes supplémentaire de niveau 8 et 9."
@@ -136,6 +144,7 @@
 @511 = "Que chaque coup critique détruise les créatures mortes-vivantes (aucun jet de sauvegarde)."
 @512 = "Un empoisonnement de la cible pendant 15 secondes (aucun jet de sauvegarde). Lorsque la cible est empoisonnée, elle subit 1 point de dégât par seconde."
 @513 = "Que chaque attaque sournoise consécutive vous rende à nouveau invisible."
+
 @601 = "Un bonus d'une demi attaque par round."
 @602 = "Une immunité aux armes magiques +2 (ne comprend pas les armes en dessous de +2)."
 @603 = "Un bonus de 10 % à toutes les résistances physiques."
@@ -145,6 +154,7 @@
 @607 = "Que chaque attaque ait 10 % de chances de devenir un coup vorpal (aucun jet de sauvegarde). (non cumulable)."
 @608 = "Que chaque attaque diminue de 5 % la résistance à la magie et de 1 la classe d'armure de la cible, pendant 1 round."
 @609 = "Que chaque coup critique devienne un coup vorpal (aucun jet de sauvegarde)."
+
 @701 = "Pouvoir utiliser n'importe quel objet."
 @702 = "Bénéficier des effets du sort « Hâte améliorée » de manière permanente."
 @703 = "Une immunité aux armes magiques +3 (ne comprend pas les armes en dessous de +3)."
@@ -154,6 +164,7 @@
 @707 = "Tripler la durée des sorts profanes. (non cumulable)."
 @708 = "Tripler la durée des sorts divins. (non cumulable)."
 @709 = "Myopie sévère. (Réduit la portée visuelle à 2', avec une paire de lunettes pour myopie incluse)."
+
 @901 = "Épée bâtarde."
 @902 = "Épée longue."
 @903 = "Épée courte."
