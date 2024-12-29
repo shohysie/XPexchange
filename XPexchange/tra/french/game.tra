@@ -95,7 +95,7 @@
 @302 = "Une immunité aux maladies, à la débilité mentale et à la cécité."
 @303 = "Une immunité aux armes normales."
 @304 = "Un bonus de 10 % à la résistance à la magie."
-@305 = "Un bonus de 20 aux jets du hiatus entropique (uniquement pour les magiciens)."
+@305 = "Un bonus de 20 aux probabilités d'obtenir un résultat favorable en cas de hiatus entropique. (uniquement pour les magiciens)."
 @306 = "Un bonus de 2 aux jets de sauvegarde contre la mort."
 @307 = "Un bonus de 2 aux jets de sauvegarde contre les baguettes, les sceptres et les bâtons."
 @308 = "Un bonus de 2 aux jets de sauvegarde contre la pétrification et la métamorphose."
