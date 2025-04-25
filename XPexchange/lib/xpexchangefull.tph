@@ -1,0 +1,123 @@
+COPY ~%MOD_FOLDER%/eff~ ~override~
+
+COPY ~%MOD_FOLDER%/spl/noname~ ~override~
+
+COPY ~%MOD_FOLDER%/spl/XPEXCHD7.spl~ ~override~
+SAY 0xce @6	//不死生物毁灭Undead destroyed
+
+COPY ~%MOD_FOLDER%/spl/XPEXCHE3.spl~ ~override~
+SAY 0xce @7	//斩首一击Vorpal Hit
+
+COPY_EXISTING ~xpcap.2da~ ~override~
+	READ_2DA_ENTRY 4 1 2 xplimit
+BUT_ONLY
+
+COPY ~%MOD_FOLDER%/itm/XPEXCHGL.itm~ ~override~
+SAY NAME2 @51
+SAY IDENTIFIED_DESC @52
+
+//有限愿望	WISH.EFF	WISH01.CRE	wish.dlg
+//愿望术	WISH2.EFF	WISH02.CRE	wish25.dlg
+/*
+COPY_EXISTING ~xplevel.2da~ ~override~
+	COUNT_2DA_COLS col_num
+	SET lvlimit = col_num - 1
+BUT_ONLY
+*/
+COPY_EXISTING ~WISH01.cre~ ~override~
+	READ_ASCII 0x248 wishbcs1
+	READ_ASCII 0x2cc wishdlg1
+BUT_ONLY
+
+COPY_EXISTING ~WISH02.cre~ ~override~
+	READ_ASCII 0x248 wishbcs2
+	READ_ASCII 0x2cc wishdlg2
+BUT_ONLY
+
+/*
+EXTEND_TOP ~%wishbcs1%.bcs~ ~%MOD_FOLDER%/baf/ADD.baf~
+ACTION_IF (~%wishbcs1%~ STRING_COMPARE_CASE ~%wishbcs2%~ != 0) BEGIN	//相等时STRING_COMPARE取0
+	EXTEND_TOP ~%wishbcs2%.bcs~ ~%MOD_FOLDER%/baf/ADD.baf~
+END
+*/
+
+//巴尔遗产模式，根据经验上限提供两种模式
+ACTION_IF (xplimit < 15000000) & (xplimit > 0) BEGIN
+	COPY_EXISTING ~XPEXCH0A.spl~ ~override/XPEXCH1A.spl~
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-500000" END
+	COPY_EXISTING ~XPEXCH0B.spl~ ~override/XPEXCH1B.spl~
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-750000" END
+	COPY_EXISTING ~XPEXCH0C.spl~ ~override/XPEXCH1C.spl~
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1000000" END
+	COPY_EXISTING ~XPEXCH0D.spl~ ~override/XPEXCH1D.spl~
+	FOR (index = 1; index < 28 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
+		PATCH_IF index < 15 BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1250000" header = "%index%" END
+		END ELSE BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1500000" header = "%index%" END
+		END
+	END
+	COPY_EXISTING ~XPEXCH0E.spl~ ~override/XPEXCH1E.spl~
+	FOR (index = 1; index < 39 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
+		PATCH_IF index < 10 BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2000000" header = "%index%" END
+		END ELSE BEGIN
+			PATCH_IF index < 19 BEGIN 
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2500000" header = "%index%" END
+			END ELSE BEGIN
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-500000" header = "%index%" END
+			END
+		END
+	END
+
+	OUTER_SPRINT dlgname ~%wishdlg1%~
+	COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD0.d~
+	ACTION_IF (~%wishdlg1%~ STRING_COMPARE_CASE ~%wishdlg2%~ != 0) BEGIN	//相等时STRING_COMPARE取0
+		OUTER_SPRINT dlgname ~%wishdlg2%~
+		COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD0.d~
+	END
+END ELSE BEGIN	
+	COPY_EXISTING ~XPEXCH0A.spl~ ~override/XPEXCH1A.spl~
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1500000" END
+	COPY_EXISTING ~XPEXCH0B.spl~ ~override/XPEXCH1B.spl~
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2250000" END
+	COPY_EXISTING ~XPEXCH0C.spl~ ~override/XPEXCH1C.spl~
+	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-3000000" END
+	COPY_EXISTING ~XPEXCH0D.spl~ ~override/XPEXCH1D.spl~
+	FOR (index = 1; index < 28 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
+		PATCH_IF index < 15 BEGIN 
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-3750000" header = "%index%" END
+		END ELSE BEGIN
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-4500000" header = "%index%" END
+		END
+	END
+	COPY_EXISTING ~XPEXCH0E.spl~ ~override/XPEXCH1E.spl~
+	FOR (index = 1; index < 39 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
+		PATCH_IF index < 10 BEGIN 
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-5000000" header = "%index%" END
+			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1000000" header = "%index%" END
+		END ELSE BEGIN
+			PATCH_IF index < 19 BEGIN 
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-5000000" header = "%index%" END
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2500000" header = "%index%" END
+			END ELSE BEGIN
+				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1500000" header = "%index%" END
+			END
+		END
+	END
+
+	OUTER_SPRINT dlgname ~%wishdlg1%~
+	COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD1.d~
+	ACTION_IF (~%wishdlg1%~ STRING_COMPARE_CASE ~%wishdlg2%~ != 0) BEGIN	//相等时STRING_COMPARE取0
+		OUTER_SPRINT dlgname ~%wishdlg2%~
+		COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD1.d~
+	END
+END
+
+/*
+ACTION_FOR_EACH dlgname IN ~wish~ ~wish25~ BEGIN
+	ACTION_IF FILE_EXISTS_IN_GAME ~%dlgname%.dlg~ BEGIN
+		COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD.d~
+  END
+END
+*/

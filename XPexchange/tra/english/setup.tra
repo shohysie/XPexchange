@@ -3,3 +3,5 @@
 @3 = "No Wish spell found in game."
 @4 = "Remove the restriction of single-class only. (Not recommended as it may disrupt game balance)"
 @5 = "'Experience Purchaser' should be installed first."
+@6 = "XP exchange restricted to single-class characters only (Recommended)"
+@7 = "Allow XP exchange for multi-class characters (Not recommended as it may disrupt game balance)"

@@ -2,63 +2,41 @@
 //~%lvlimit%~为游戏最高人物等级
 //经验上限高，遗产模式判断要求+900w
 
+//~%dlgname%~分有限愿望和许愿术两个法术
+//~%lvlimit%~为游戏最高人物等级
+//经验上限低，遗产模式判断要求仅+250w
+
 EXTEND_BOTTOM ~%dlgname%~ 0
 	IF ~~
-	THEN REPLY @9 DO ~ReallyForceSpellRES("XPEXCH00",Myself)~ GOTO xpselect0	//你能提供一些特殊能力，让我的队员用经验点数进行交易吗？
+	THEN REPLY @9 DO ~ReallyForceSpellRES("XPEXCH00",Myself)~ GOTO xpcheck0	//你能提供一些特殊能力，让我的队员用经验点数进行交易吗？
 END
 
-/*
-XPEXCH00，让所有队员免疫XPEXCH0A-0E且自身等级设为1
+/*改
+XPEXCH00，自身等级设为1
 XPEXCH01，等级+20
 XPEXCH02，等级+5
 XPEXCH03，等级+1
-XPEXCH04，移除XPEXCH00的免疫，让该队员可以接受XPEXCH0A-0E
-XPEXCH0A-0E为队伍全体扣除经验获得能力，但除了目标队员外均被XPEXCH00挡住
-XPEXCH1A-1E为巴尔遗产难度下全队扣除更多经验
+XPEXCH0A-0E目标扣除经验获得能力
+XPEXCH1A-1E为巴尔遗产难度下扣除更多经验
+XPEXCHAR变量为1-6表示对不同队员
 */
 
 APPEND ~%dlgname%~
 
-	IF ~~ THEN BEGIN xpselect0
+	IF ~~ THEN BEGIN xpcheck0
 		SAY @10	//是哪一位大人需要进行经验点数交换？我需要仔细看看他的状况。
-		IF ~InMyArea(Player1) !NightmareModeOn() XPGT(Player1,5999999)~ THEN REPLY @11 GOTO xpselect1	//是<PLAYER1>需要进行交换。
-		IF ~InMyArea(Player2) !NightmareModeOn() XPGT(Player2,5999999)~ THEN REPLY @12 GOTO xpselect2	//是<PLAYER2>需要进行交换。
-		IF ~InMyArea(Player3) !NightmareModeOn() XPGT(Player3,5999999)~ THEN REPLY @13 GOTO xpselect3	//是<PLAYER3>需要进行交换。
-		IF ~InMyArea(Player4) !NightmareModeOn() XPGT(Player4,5999999)~ THEN REPLY @14 GOTO xpselect4	//是<PLAYER4>需要进行交换。
-		IF ~InMyArea(Player5) !NightmareModeOn() XPGT(Player5,5999999)~ THEN REPLY @15 GOTO xpselect5	//是<PLAYER5>需要进行交换。
-		IF ~InMyArea(Player6) !NightmareModeOn() XPGT(Player6,5999999)~ THEN REPLY @16 GOTO xpselect6	//是<PLAYER6>需要进行交换。
-		IF ~InMyArea(Player1) NightmareModeOn() XPGT(Player1,14999999)~ THEN REPLY @11 GOTO xpselect1	//是<PLAYER1>需要进行交换。
-		IF ~InMyArea(Player2) NightmareModeOn() XPGT(Player2,14999999)~ THEN REPLY @12 GOTO xpselect2	//是<PLAYER2>需要进行交换。
-		IF ~InMyArea(Player3) NightmareModeOn() XPGT(Player3,14999999)~ THEN REPLY @13 GOTO xpselect3	//是<PLAYER3>需要进行交换。
-		IF ~InMyArea(Player4) NightmareModeOn() XPGT(Player4,14999999)~ THEN REPLY @14 GOTO xpselect4	//是<PLAYER4>需要进行交换。
-		IF ~InMyArea(Player5) NightmareModeOn() XPGT(Player5,14999999)~ THEN REPLY @15 GOTO xpselect5	//是<PLAYER5>需要进行交换。
-		IF ~InMyArea(Player6) NightmareModeOn() XPGT(Player6,14999999)~ THEN REPLY @16 GOTO xpselect6	//是<PLAYER6>需要进行交换。
-		IF ~!NightmareModeOn()
-		!XPGT(Player1,5999999)
-		!XPGT(Player2,5999999)
-		!XPGT(Player3,5999999)
-		!XPGT(Player4,5999999)
-		!XPGT(Player5,5999999)
-		!XPGT(Player6,5999999)~ THEN REPLY @39 GOTO xpselect9	//我的队员经验都不够充足，下次吧。		
-		IF ~NightmareModeOn()
-		!XPGT(Player1,14999999)
-		!XPGT(Player2,14999999)
-		!XPGT(Player3,14999999)
-		!XPGT(Player4,14999999)
-		!XPGT(Player5,14999999)
-		!XPGT(Player6,14999999)~ THEN REPLY @39 GOTO xpselect9	//我的队员经验都不够充足，下次吧。		
-		IF ~~ THEN REPLY @40 GOTO xpselect9	//我改变主意了，还是算了。
+		IF ~InMyArea(Player1)~ THEN REPLY @11 DO ~SetGlobal("XPEXCHAR","LOCALS",1)~ GOTO xpcheck1	//是<PLAYER1>需要进行交换。
+		IF ~InMyArea(Player2)~ THEN REPLY @12 DO ~SetGlobal("XPEXCHAR","LOCALS",2)~ GOTO xpcheck2	//是<PLAYER2>需要进行交换。
+		IF ~InMyArea(Player3)~ THEN REPLY @13 DO ~SetGlobal("XPEXCHAR","LOCALS",3)~ GOTO xpcheck3	//是<PLAYER3>需要进行交换。
+		IF ~InMyArea(Player4)~ THEN REPLY @14 DO ~SetGlobal("XPEXCHAR","LOCALS",4)~ GOTO xpcheck4	//是<PLAYER4>需要进行交换。
+		IF ~InMyArea(Player5)~ THEN REPLY @15 DO ~SetGlobal("XPEXCHAR","LOCALS",5)~ GOTO xpcheck5	//是<PLAYER5>需要进行交换。
+		IF ~InMyArea(Player6)~ THEN REPLY @16 DO ~SetGlobal("XPEXCHAR","LOCALS",6)~ GOTO xpcheck6	//是<PLAYER6>需要进行交换。
+		IF ~~ THEN REPLY @40 DO ~SetGlobal("XPEXCHAR","LOCALS",0)~ GOTO xpcheck9	//我改变主意了，还是算了。
 	END
 
-	IF ~~ THEN BEGIN xpselect1
+	IF ~~ THEN BEGIN xpcheck1
 		SAY @17	//让我看看……
-		IF ~OR(2)
-		!NightmareModeOn()
-		XPGT(Player1,14999999)
-		OR(2)
-		NightmareModeOn()
-		XPGT(Player1,5999999)
-		OR(11)
+		IF ~OR(11)
 		Class(Player1,MAGE)
 		Class(Player1,FIGHTER)
 		Class(Player1,CLERIC)
@@ -69,7 +47,7 @@ APPEND ~%dlgname%~
 		Class(Player1,RANGER)
 		Class(Player1,SORCERER)
 		Class(Player1,MONK)
-		Class(Player1,SHAMAN)~ THEN DO ~ReallyForceSpellRES("XPEXCH04",Player1)~ GOTO xpexchange0
+		Class(Player1,SHAMAN)~ THEN GOTO xpselect1
 		IF ~!Class(Player1,MAGE)
 		!Class(Player1,FIGHTER)
 		!Class(Player1,CLERIC)
@@ -80,18 +58,14 @@ APPEND ~%dlgname%~
 		!Class(Player1,RANGER)
 		!Class(Player1,SORCERER)
 		!Class(Player1,MONK)
-		!Class(Player1,SHAMAN)~ THEN GOTO xpselect7	//不是单一职业
+		!Class(Player1,SHAMAN)~ THEN GOTO xpcheck7	//不是单一职业
+		IF ~!NightmareModeOn() XPLT(Player1,1000000)~ THEN GOTO xpcheck8	//经验不足
+		IF ~NightmareModeOn() XPLT(Player1,1500000)~ THEN  GOTO xpcheck8	//经验不足
 	END
 
-	IF ~~ THEN BEGIN xpselect2
+	IF ~~ THEN BEGIN xpcheck2
 		SAY @17	//让我看看……
-		IF ~OR(2)
-		!NightmareModeOn()
-		XPGT(Player2,14999999)
-		OR(2)
-		NightmareModeOn()
-		XPGT(Player2,5999999)
-		OR(11)
+		IF ~OR(11)
 		Class(Player2,MAGE)
 		Class(Player2,FIGHTER)
 		Class(Player2,CLERIC)
@@ -102,7 +76,7 @@ APPEND ~%dlgname%~
 		Class(Player2,RANGER)
 		Class(Player2,SORCERER)
 		Class(Player2,MONK)
-		Class(Player2,SHAMAN)~ THEN DO ~ReallyForceSpellRES("XPEXCH04",Player2)~ GOTO xpexchange0
+		Class(Player2,SHAMAN)~ THEN GOTO xpselect2
 		IF ~!Class(Player2,MAGE)
 		!Class(Player2,FIGHTER)
 		!Class(Player2,CLERIC)
@@ -113,18 +87,14 @@ APPEND ~%dlgname%~
 		!Class(Player2,RANGER)
 		!Class(Player2,SORCERER)
 		!Class(Player2,MONK)
-		!Class(Player2,SHAMAN)~ THEN GOTO xpselect7	//不是单一职业
+		!Class(Player2,SHAMAN)~ THEN GOTO xpcheck7	//不是单一职业
+		IF ~!NightmareModeOn() XPLT(Player2,1000000)~ THEN GOTO xpcheck8	//经验不足
+		IF ~NightmareModeOn() XPLT(Player2,1500000)~ THEN  GOTO xpcheck8	//经验不足
 	END
 
-	IF ~~ THEN BEGIN xpselect3
+	IF ~~ THEN BEGIN xpcheck3
 		SAY @17	//让我看看……
-		IF ~OR(2)
-		!NightmareModeOn()
-		XPGT(Player3,14999999)
-		OR(2)
-		NightmareModeOn()
-		XPGT(Player3,5999999)
-		OR(11)
+		IF ~OR(2)OR(11)
 		Class(Player3,MAGE)
 		Class(Player3,FIGHTER)
 		Class(Player3,CLERIC)
@@ -135,7 +105,7 @@ APPEND ~%dlgname%~
 		Class(Player3,RANGER)
 		Class(Player3,SORCERER)
 		Class(Player3,MONK)
-		Class(Player3,SHAMAN)~ THEN DO ~ReallyForceSpellRES("XPEXCH04",Player3)~ GOTO xpexchange0
+		Class(Player3,SHAMAN)~ THEN GOTO xpselect3
 		IF ~!Class(Player3,MAGE)
 		!Class(Player3,FIGHTER)
 		!Class(Player3,CLERIC)
@@ -146,18 +116,14 @@ APPEND ~%dlgname%~
 		!Class(Player3,RANGER)
 		!Class(Player3,SORCERER)
 		!Class(Player3,MONK)
-		!Class(Player3,SHAMAN)~ THEN GOTO xpselect7	//不是单一职业
+		!Class(Player3,SHAMAN)~ THEN GOTO xpcheck7	//不是单一职业
+		IF ~!NightmareModeOn() XPLT(Player3,1000000)~ THEN GOTO xpcheck8	//经验不足
+		IF ~NightmareModeOn() XPLT(Player3,1500000)~ THEN  GOTO xpcheck8	//经验不足
 	END
 
-	IF ~~ THEN BEGIN xpselect4
+	IF ~~ THEN BEGIN xpcheck4
 		SAY @17	//让我看看……
-		IF ~OR(2)
-		!NightmareModeOn()
-		XPGT(Player4,14999999)
-		OR(2)
-		NightmareModeOn()
-		XPGT(Player4,5999999)
-		OR(11)
+		IF ~OR(11)
 		Class(Player4,MAGE)
 		Class(Player4,FIGHTER)
 		Class(Player4,CLERIC)
@@ -168,7 +134,7 @@ APPEND ~%dlgname%~
 		Class(Player4,RANGER)
 		Class(Player4,SORCERER)
 		Class(Player4,MONK)
-		Class(Player4,SHAMAN)~ THEN DO ~ReallyForceSpellRES("XPEXCH04",Player4)~ GOTO xpexchange0
+		Class(Player4,SHAMAN)~ THEN GOTO xpselect4
 		IF ~!Class(Player4,MAGE)
 		!Class(Player4,FIGHTER)
 		!Class(Player4,CLERIC)
@@ -179,18 +145,14 @@ APPEND ~%dlgname%~
 		!Class(Player4,RANGER)
 		!Class(Player4,SORCERER)
 		!Class(Player4,MONK)
-		!Class(Player4,SHAMAN)~ THEN GOTO xpselect7	//不是单一职业
+		!Class(Player4,SHAMAN)~ THEN GOTO xpcheck7	//不是单一职业
+		IF ~!NightmareModeOn() XPLT(Player4,1000000)~ THEN GOTO xpcheck8	//经验不足
+		IF ~NightmareModeOn() XPLT(Player4,1500000)~ THEN  GOTO xpcheck8	//经验不足
 	END
 
-	IF ~~ THEN BEGIN xpselect5
+	IF ~~ THEN BEGIN xpcheck5
 		SAY @17	//让我看看……
-		IF ~OR(2)
-		!NightmareModeOn()
-		XPGT(Player5,14999999)
-		OR(2)
-		NightmareModeOn()
-		XPGT(Player5,5999999)
-		OR(11)
+		IF ~OR(11)
 		Class(Player5,MAGE)
 		Class(Player5,FIGHTER)
 		Class(Player5,CLERIC)
@@ -201,7 +163,7 @@ APPEND ~%dlgname%~
 		Class(Player5,RANGER)
 		Class(Player5,SORCERER)
 		Class(Player5,MONK)
-		Class(Player5,SHAMAN)~ THEN DO ~ReallyForceSpellRES("XPEXCH04",Player5)~ GOTO xpexchange0
+		Class(Player5,SHAMAN)~ THEN GOTO xpselect5
 		IF ~!Class(Player5,MAGE)
 		!Class(Player5,FIGHTER)
 		!Class(Player5,CLERIC)
@@ -212,18 +174,14 @@ APPEND ~%dlgname%~
 		!Class(Player5,RANGER)
 		!Class(Player5,SORCERER)
 		!Class(Player5,MONK)
-		!Class(Player5,SHAMAN)~ THEN GOTO xpselect7	//不是单一职业
+		!Class(Player5,SHAMAN)~ THEN GOTO xpcheck7	//不是单一职业
+		IF ~!NightmareModeOn() XPLT(Player5,1000000)~ THEN GOTO xpcheck8	//经验不足
+		IF ~NightmareModeOn() XPLT(Player5,1500000)~ THEN  GOTO xpcheck8	//经验不足
 	END
 
-	IF ~~ THEN BEGIN xpselect6
+	IF ~~ THEN BEGIN xpcheck6
 		SAY @17	//让我看看……
-		IF ~OR(2)
-		!NightmareModeOn()
-		XPGT(Player6,14999999)
-		OR(2)
-		NightmareModeOn()
-		XPGT(Player6,5999999)
-		OR(11)
+		IF ~OR(11)
 		Class(Player6,MAGE)
 		Class(Player6,FIGHTER)
 		Class(Player6,CLERIC)
@@ -234,7 +192,7 @@ APPEND ~%dlgname%~
 		Class(Player6,RANGER)
 		Class(Player6,SORCERER)
 		Class(Player6,MONK)
-		Class(Player6,SHAMAN)~ THEN DO ~ReallyForceSpellRES("XPEXCH04",Player6)~ GOTO xpexchange0
+		Class(Player6,SHAMAN)~ THEN GOTO xpselect6
 		IF ~!Class(Player6,MAGE)
 		!Class(Player6,FIGHTER)
 		!Class(Player6,CLERIC)
@@ -245,53 +203,144 @@ APPEND ~%dlgname%~
 		!Class(Player6,RANGER)
 		!Class(Player6,SORCERER)
 		!Class(Player6,MONK)
-		!Class(Player6,SHAMAN)~ THEN GOTO xpselect7	//不是单一职业
+		!Class(Player6,SHAMAN)~ THEN GOTO xpcheck7	//不是单一职业
+		IF ~!NightmareModeOn() XPLT(Player6,1000000)~ THEN GOTO xpcheck8	//经验不足
+		IF ~NightmareModeOn() XPLT(Player6,1500000)~ THEN  GOTO xpcheck8	//经验不足
 	END
 
-	IF ~~ THEN BEGIN xpselect7
+	IF ~~ THEN BEGIN xpcheck7
 		SAY @18	//只有单一职业者才能进行交换，这位大人已经学得够多够复杂了。
-		IF ~~ GOTO xpselect0
-	END
-/*
-	IF ~~ THEN BEGIN xpselect8
-		SAY @19	//这位大人已经达到了职业的顶点，需要积累更多的经验才能进行交换。
-		IF ~~ GOTO xpselect0
-	END
-*/
-	IF ~~ THEN BEGIN xpexchange0
-		SAY @20	//我可以和这位大人进行交易，您打算付出多少经验点数？
-		IF ~!NightmareModeOn()~ THEN REPLY @21 GOTO xpexchange1	//一百万点。
-		IF ~!NightmareModeOn()~ THEN REPLY @22 GOTO xpexchange2	//一百五十万点。
-		IF ~!NightmareModeOn()~ THEN REPLY @23 GOTO xpexchange3	//二百万点。
-		IF ~!NightmareModeOn()~ THEN REPLY @24 GOTO xpexchange4	//二百五十万点。
-		IF ~!NightmareModeOn()~ THEN REPLY @25 GOTO xpexchange5	//三百万点。
-		IF ~!NightmareModeOn()~ THEN REPLY @26 GOTO xpexchange6	//四百万点。
-		IF ~!NightmareModeOn()~ THEN REPLY @27 GOTO xpexchange7	//五百万点。
-		IF ~NightmareModeOn()~ THEN REPLY @71 GOTO xpexchange1	//两百五十万点。
-		IF ~NightmareModeOn()~ THEN REPLY @72 GOTO xpexchange2	//三百七十五万点。
-		IF ~NightmareModeOn()~ THEN REPLY @73 GOTO xpexchange3	//五百万点。
-		IF ~NightmareModeOn()~ THEN REPLY @74 GOTO xpexchange4	//六百二十五万点。
-		IF ~NightmareModeOn()~ THEN REPLY @75 GOTO xpexchange5	//七百五十万点。
-		IF ~NightmareModeOn()~ THEN REPLY @76 GOTO xpexchange6	//一千万点。
-		IF ~NightmareModeOn()~ THEN REPLY @77 GOTO xpexchange7	//一千二百五十万点。
-		IF ~~ THEN REPLY @40 GOTO xpselect9	//我改变主意了，还是算了。
+		IF ~~ DO ~SetGlobal("XPEXCHAR","LOCALS",0)~ GOTO xpcheck0
 	END
 
-	IF ~~ THEN BEGIN xpselect9
+	IF ~~ THEN BEGIN xpcheck8
+		SAY @37	//很遗憾，这位大人积累的经验还不够丰富。
+		IF ~~ DO ~SetGlobal("XPEXCHAR","LOCALS",0)~ GOTO xpcheck0
+	END
+
+	IF ~~ THEN BEGIN xpselect1
+		SAY @20	//我可以和这位大人进行交易，您打算付出多少经验点数？
+		IF ~!NightmareModeOn() !XPLT(Player1,1000000)~ THEN REPLY @21 GOTO abselect1	//一百万点。
+		IF ~!NightmareModeOn() !XPLT(Player1,1500000)~ THEN REPLY @22 GOTO abselect2	//一百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player1,2000000)~ THEN REPLY @23 GOTO abselect3	//二百万点。
+		IF ~!NightmareModeOn() !XPLT(Player1,2500000)~ THEN REPLY @24 GOTO abselect4	//二百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player1,3000000)~ THEN REPLY @25 GOTO abselect5	//三百万点。
+		IF ~!NightmareModeOn() !XPLT(Player1,4000000)~ THEN REPLY @26 GOTO abselect6	//四百万点。
+		IF ~!NightmareModeOn() !XPLT(Player1,5000000)~ THEN REPLY @27 GOTO abselect7	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player1,2500000)~ THEN REPLY @71 GOTO abselect1	//两百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player1,3750000)~ THEN REPLY @72 GOTO abselect2	//三百七十五万点。
+		IF ~NightmareModeOn() !XPLT(Player1,5000000)~ THEN REPLY @73 GOTO abselect3	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player1,6250000)~ THEN REPLY @74 GOTO abselect4	//六百二十五万点。
+		IF ~NightmareModeOn() !XPLT(Player1,7500000)~ THEN REPLY @75 GOTO abselect5	//七百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player1,10000000)~ THEN REPLY @76 GOTO abselect6	//一千万点。
+		IF ~NightmareModeOn() !XPLT(Player1,12500000)~ THEN REPLY @77 GOTO abselect7	//一千二百五十万点。
+		IF ~~ THEN REPLY @39 GOTO xpcheck0	//我想换一位队员进行交易。
+	END
+
+	IF ~~ THEN BEGIN xpselect2
+		SAY @20	//我可以和这位大人进行交易，您打算付出多少经验点数？
+		IF ~!NightmareModeOn() !XPLT(Player2,1000000)~ THEN REPLY @21 GOTO abselect1	//一百万点。
+		IF ~!NightmareModeOn() !XPLT(Player2,1500000)~ THEN REPLY @22 GOTO abselect2	//一百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player2,2000000)~ THEN REPLY @23 GOTO abselect3	//二百万点。
+		IF ~!NightmareModeOn() !XPLT(Player2,2500000)~ THEN REPLY @24 GOTO abselect4	//二百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player2,3000000)~ THEN REPLY @25 GOTO abselect5	//三百万点。
+		IF ~!NightmareModeOn() !XPLT(Player2,4000000)~ THEN REPLY @26 GOTO abselect6	//四百万点。
+		IF ~!NightmareModeOn() !XPLT(Player2,5000000)~ THEN REPLY @27 GOTO abselect7	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player2,2500000)~ THEN REPLY @71 GOTO abselect1	//两百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player2,3750000)~ THEN REPLY @72 GOTO abselect2	//三百七十五万点。
+		IF ~NightmareModeOn() !XPLT(Player2,5000000)~ THEN REPLY @73 GOTO abselect3	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player2,6250000)~ THEN REPLY @74 GOTO abselect4	//六百二十五万点。
+		IF ~NightmareModeOn() !XPLT(Player2,7500000)~ THEN REPLY @75 GOTO abselect5	//七百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player2,10000000)~ THEN REPLY @76 GOTO abselect6	//一千万点。
+		IF ~NightmareModeOn() !XPLT(Player2,12500000)~ THEN REPLY @77 GOTO abselect7	//一千二百五十万点。
+		IF ~~ THEN REPLY @39 GOTO xpcheck0	//我想换一位队员进行交易。
+	END
+
+	IF ~~ THEN BEGIN xpselect3
+		SAY @20	//我可以和这位大人进行交易，您打算付出多少经验点数？
+		IF ~!NightmareModeOn() !XPLT(Player3,1000000)~ THEN REPLY @21 GOTO abselect1	//一百万点。
+		IF ~!NightmareModeOn() !XPLT(Player3,1500000)~ THEN REPLY @22 GOTO abselect2	//一百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player3,2000000)~ THEN REPLY @23 GOTO abselect3	//二百万点。
+		IF ~!NightmareModeOn() !XPLT(Player3,2500000)~ THEN REPLY @24 GOTO abselect4	//二百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player3,3000000)~ THEN REPLY @25 GOTO abselect5	//三百万点。
+		IF ~!NightmareModeOn() !XPLT(Player3,4000000)~ THEN REPLY @26 GOTO abselect6	//四百万点。
+		IF ~!NightmareModeOn() !XPLT(Player3,5000000)~ THEN REPLY @27 GOTO abselect7	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player3,2500000)~ THEN REPLY @71 GOTO abselect1	//两百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player3,3750000)~ THEN REPLY @72 GOTO abselect2	//三百七十五万点。
+		IF ~NightmareModeOn() !XPLT(Player3,5000000)~ THEN REPLY @73 GOTO abselect3	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player3,6250000)~ THEN REPLY @74 GOTO abselect4	//六百二十五万点。
+		IF ~NightmareModeOn() !XPLT(Player3,7500000)~ THEN REPLY @75 GOTO abselect5	//七百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player3,10000000)~ THEN REPLY @76 GOTO abselect6	//一千万点。
+		IF ~NightmareModeOn() !XPLT(Player3,12500000)~ THEN REPLY @77 GOTO abselect7	//一千二百五十万点。
+		IF ~~ THEN REPLY @39 GOTO xpcheck0	//我想换一位队员进行交易。
+	END
+
+	IF ~~ THEN BEGIN xpselect4
+		SAY @20	//我可以和这位大人进行交易，您打算付出多少经验点数？
+		IF ~!NightmareModeOn() !XPLT(Player4,1000000)~ THEN REPLY @21 GOTO abselect1	//一百万点。
+		IF ~!NightmareModeOn() !XPLT(Player4,1500000)~ THEN REPLY @22 GOTO abselect2	//一百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player4,2000000)~ THEN REPLY @23 GOTO abselect3	//二百万点。
+		IF ~!NightmareModeOn() !XPLT(Player4,2500000)~ THEN REPLY @24 GOTO abselect4	//二百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player4,3000000)~ THEN REPLY @25 GOTO abselect5	//三百万点。
+		IF ~!NightmareModeOn() !XPLT(Player4,4000000)~ THEN REPLY @26 GOTO abselect6	//四百万点。
+		IF ~!NightmareModeOn() !XPLT(Player4,5000000)~ THEN REPLY @27 GOTO abselect7	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player4,2500000)~ THEN REPLY @71 GOTO abselect1	//两百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player4,3750000)~ THEN REPLY @72 GOTO abselect2	//三百七十五万点。
+		IF ~NightmareModeOn() !XPLT(Player4,5000000)~ THEN REPLY @73 GOTO abselect3	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player4,6250000)~ THEN REPLY @74 GOTO abselect4	//六百二十五万点。
+		IF ~NightmareModeOn() !XPLT(Player4,7500000)~ THEN REPLY @75 GOTO abselect5	//七百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player4,10000000)~ THEN REPLY @76 GOTO abselect6	//一千万点。
+		IF ~NightmareModeOn() !XPLT(Player4,12500000)~ THEN REPLY @77 GOTO abselect7	//一千二百五十万点。
+		IF ~~ THEN REPLY @39 GOTO xpcheck0	//我想换一位队员进行交易。
+	END
+
+	IF ~~ THEN BEGIN xpselect5
+		SAY @20	//我可以和这位大人进行交易，您打算付出多少经验点数？
+		IF ~!NightmareModeOn() !XPLT(Player5,1000000)~ THEN REPLY @21 GOTO abselect1	//一百万点。
+		IF ~!NightmareModeOn() !XPLT(Player5,1500000)~ THEN REPLY @22 GOTO abselect2	//一百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player5,2000000)~ THEN REPLY @23 GOTO abselect3	//二百万点。
+		IF ~!NightmareModeOn() !XPLT(Player5,2500000)~ THEN REPLY @24 GOTO abselect4	//二百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player5,3000000)~ THEN REPLY @25 GOTO abselect5	//三百万点。
+		IF ~!NightmareModeOn() !XPLT(Player5,4000000)~ THEN REPLY @26 GOTO abselect6	//四百万点。
+		IF ~!NightmareModeOn() !XPLT(Player5,5000000)~ THEN REPLY @27 GOTO abselect7	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player5,2500000)~ THEN REPLY @71 GOTO abselect1	//两百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player5,3750000)~ THEN REPLY @72 GOTO abselect2	//三百七十五万点。
+		IF ~NightmareModeOn() !XPLT(Player5,5000000)~ THEN REPLY @73 GOTO abselect3	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player5,6250000)~ THEN REPLY @74 GOTO abselect4	//六百二十五万点。
+		IF ~NightmareModeOn() !XPLT(Player5,7500000)~ THEN REPLY @75 GOTO abselect5	//七百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player5,10000000)~ THEN REPLY @76 GOTO abselect6	//一千万点。
+		IF ~NightmareModeOn() !XPLT(Player5,12500000)~ THEN REPLY @77 GOTO abselect7	//一千二百五十万点。
+		IF ~~ THEN REPLY @39 GOTO xpcheck0	//我想换一位队员进行交易。
+	END
+
+	IF ~~ THEN BEGIN xpselect6
+		SAY @20	//我可以和这位大人进行交易，您打算付出多少经验点数？
+		IF ~!NightmareModeOn() !XPLT(Player6,1000000)~ THEN REPLY @21 GOTO abselect1	//一百万点。
+		IF ~!NightmareModeOn() !XPLT(Player6,1500000)~ THEN REPLY @22 GOTO abselect2	//一百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player6,2000000)~ THEN REPLY @23 GOTO abselect3	//二百万点。
+		IF ~!NightmareModeOn() !XPLT(Player6,2500000)~ THEN REPLY @24 GOTO abselect4	//二百五十万点。
+		IF ~!NightmareModeOn() !XPLT(Player6,3000000)~ THEN REPLY @25 GOTO abselect5	//三百万点。
+		IF ~!NightmareModeOn() !XPLT(Player6,4000000)~ THEN REPLY @26 GOTO abselect6	//四百万点。
+		IF ~!NightmareModeOn() !XPLT(Player6,5000000)~ THEN REPLY @27 GOTO abselect7	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player6,2500000)~ THEN REPLY @71 GOTO abselect1	//两百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player6,3750000)~ THEN REPLY @72 GOTO abselect2	//三百七十五万点。
+		IF ~NightmareModeOn() !XPLT(Player6,5000000)~ THEN REPLY @73 GOTO abselect3	//五百万点。
+		IF ~NightmareModeOn() !XPLT(Player6,6250000)~ THEN REPLY @74 GOTO abselect4	//六百二十五万点。
+		IF ~NightmareModeOn() !XPLT(Player6,7500000)~ THEN REPLY @75 GOTO abselect5	//七百五十万点。
+		IF ~NightmareModeOn() !XPLT(Player6,10000000)~ THEN REPLY @76 GOTO abselect6	//一千万点。
+		IF ~NightmareModeOn() !XPLT(Player6,12500000)~ THEN REPLY @77 GOTO abselect7	//一千二百五十万点。
+		IF ~~ THEN REPLY @39 GOTO xpcheck0	//我想换一位队员进行交易。
+	END
+
+	IF ~~ THEN BEGIN xpcheck9
 		SAY @38	//很好，我这就离开。
 		IF ~~ THEN DO ~SetInterrupt(FALSE)
-		ReallyForceSpellRES("XPEXCH04",Player1)
-		ReallyForceSpellRES("XPEXCH04",Player2)
-		ReallyForceSpellRES("XPEXCH04",Player3)
-		ReallyForceSpellRES("XPEXCH04",Player4)
-		ReallyForceSpellRES("XPEXCH04",Player5)
-		ReallyForceSpellRES("XPEXCH04",Player6)
 		ForceSpell(Myself,DRYAD_TELEPORT)
 		SmallWait(1)
 		DestroySelf()~ EXIT
 	END
 
-	IF ~~ THEN BEGIN xpexchange1
+	IF ~~ THEN BEGIN abselect1
 		SAY @30	//选择你希望交换得到的能力。
 		IF ~~ THEN REPLY @101 GOTO giveability1	//1	AC+1有利
 		IF ~~ THEN REPLY @102 DO ~ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability1	//2	对挥砍武器的AC+4有利
@@ -364,10 +413,15 @@ APPEND ~%dlgname%~
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability1	//20	武器出手时间-4
-		IF ~~ THEN REPLY @28 GOTO xpexchange0	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",1)~ THEN REPLY @28 GOTO xpselect1	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",2)~ THEN REPLY @28 GOTO xpselect2	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",3)~ THEN REPLY @28 GOTO xpselect3	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",4)~ THEN REPLY @28 GOTO xpselect4	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",5)~ THEN REPLY @28 GOTO xpselect5	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",6)~ THEN REPLY @28 GOTO xpselect6	//	如果付出不一样的经验点数，可以交换其它技能吗？
 	END
 
-	IF ~~ THEN BEGIN xpexchange2
+	IF ~~ THEN BEGIN abselect2
 		SAY @30	//选择你希望交换得到的能力。
 		IF ~~ THEN REPLY @201 GOTO giveability2	//1	造成的挥砍伤害提升10%
 		IF ~~ THEN REPLY @202 DO ~ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability2	//2	造成的穿刺伤害提升10%
@@ -433,11 +487,16 @@ APPEND ~%dlgname%~
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability2	//19	单手武器流派设为2星
-		IF ~~ THEN REPLY @220 GOTO xpexchange9	//20	选定一种武器获得五星熟练度
-		IF ~~ THEN REPLY @28 GOTO xpexchange0	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~~ THEN REPLY @220 GOTO abselect9	//20	选定一种武器获得五星熟练度
+		IF ~Global("XPEXCHAR","LOCALS",1)~ THEN REPLY @28 GOTO xpselect1	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",2)~ THEN REPLY @28 GOTO xpselect2	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",3)~ THEN REPLY @28 GOTO xpselect3	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",4)~ THEN REPLY @28 GOTO xpselect4	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",5)~ THEN REPLY @28 GOTO xpselect5	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",6)~ THEN REPLY @28 GOTO xpselect6	//	如果付出不一样的经验点数，可以交换其它技能吗？
 	END
 
-	IF ~~ THEN BEGIN xpexchange3
+	IF ~~ THEN BEGIN abselect3
 		SAY @30	//选择你希望交换得到的能力。
 		IF ~~ THEN REPLY @301 GOTO giveability3	//1	无法侦测
 		IF ~~ THEN REPLY @302 DO ~ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability3	//2	免疫疾病、弱智和目盲
@@ -532,10 +591,15 @@ APPEND ~%dlgname%~
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability3	//24	对远程武器增加20%的抵抗力
-		IF ~~ THEN REPLY @28 GOTO xpexchange0	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",1)~ THEN REPLY @28 GOTO xpselect1	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",2)~ THEN REPLY @28 GOTO xpselect2	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",3)~ THEN REPLY @28 GOTO xpselect3	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",4)~ THEN REPLY @28 GOTO xpselect4	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",5)~ THEN REPLY @28 GOTO xpselect5	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",6)~ THEN REPLY @28 GOTO xpselect6	//	如果付出不一样的经验点数，可以交换其它技能吗？
 	END
 
-	IF ~~ THEN BEGIN xpexchange4
+	IF ~~ THEN BEGIN abselect4
 		SAY @30	//选择你希望交换得到的能力。
 		IF ~~ THEN REPLY @401 GOTO giveability4	//1	免疫负面精神状态的影响，包括魅惑、控制、恐惧、士气崩溃、狂暴、困惑和昏迷
 		IF ~~ THEN REPLY @402 DO ~ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability4	//2	所有元素抗力（火冰电酸毒）永久+10%
@@ -577,10 +641,15 @@ APPEND ~%dlgname%~
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability4	//14	背刺成功时致残对手（疾病效果，迟缓、流血且力量敏捷-2不利，持续1回合。无豁免）
-		IF ~~ THEN REPLY @28 GOTO xpexchange0	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",1)~ THEN REPLY @28 GOTO xpselect1	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",2)~ THEN REPLY @28 GOTO xpselect2	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",3)~ THEN REPLY @28 GOTO xpselect3	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",4)~ THEN REPLY @28 GOTO xpselect4	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",5)~ THEN REPLY @28 GOTO xpselect5	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",6)~ THEN REPLY @28 GOTO xpselect6	//	如果付出不一样的经验点数，可以交换其它技能吗？
 	END
 
-	IF ~~ THEN BEGIN xpexchange5
+	IF ~~ THEN BEGIN abselect5
 		SAY @30	//选择你希望交换得到的能力。
 		IF ~~ THEN REPLY @501 DO ~ReallyForceSpellRES("XPEXCH01",Myself)~ GOTO giveability4	//21	免疫即死，包括石化、解离和死亡一指、女妖之嚎等法术的即死效果
 		IF ~~ THEN REPLY @502 DO ~ReallyForceSpellRES("XPEXCH01",Myself)
@@ -629,10 +698,15 @@ APPEND ~%dlgname%~
 		ReallyForceSpellRES("XPEXCH02",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability4	//33	背刺成功时必定使自身进入隐形状态
-		IF ~~ THEN REPLY @28 GOTO xpexchange0	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",1)~ THEN REPLY @28 GOTO xpselect1	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",2)~ THEN REPLY @28 GOTO xpselect2	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",3)~ THEN REPLY @28 GOTO xpselect3	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",4)~ THEN REPLY @28 GOTO xpselect4	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",5)~ THEN REPLY @28 GOTO xpselect5	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",6)~ THEN REPLY @28 GOTO xpselect6	//	如果付出不一样的经验点数，可以交换其它技能吗？
 	END
 
-	IF ~~ THEN BEGIN xpexchange6
+	IF ~~ THEN BEGIN abselect6
 		SAY @30	//选择你希望交换得到的能力。
 		IF ~~ THEN REPLY @601 GOTO giveability5	//1	每轮多攻击1/2次
 		IF ~~ THEN REPLY @602 DO ~ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability5	//2	免疫附魔等级+2的武器（不包括+2以下武器）
@@ -655,10 +729,15 @@ APPEND ~%dlgname%~
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability5	//9	致命一击时必定将敌人斩首（无豁免）
-		IF ~~ THEN REPLY @28 GOTO xpexchange0	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",1)~ THEN REPLY @28 GOTO xpselect1	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",2)~ THEN REPLY @28 GOTO xpselect2	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",3)~ THEN REPLY @28 GOTO xpselect3	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",4)~ THEN REPLY @28 GOTO xpselect4	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",5)~ THEN REPLY @28 GOTO xpselect5	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",6)~ THEN REPLY @28 GOTO xpselect6	//	如果付出不一样的经验点数，可以交换其它技能吗？
 	END
 
-	IF ~~ THEN BEGIN xpexchange7
+	IF ~~ THEN BEGIN abselect7
 		SAY @30	//选择你希望交换得到的能力。
 		IF ~~ THEN REPLY @701 DO ~ReallyForceSpellRES("XPEXCH02",Myself)
 		ReallyForceSpellRES("XPEXCH02",Myself)~ GOTO giveability5	//11	获得万能巧手
@@ -698,10 +777,15 @@ APPEND ~%dlgname%~
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability5	//19	高度近视（只能看见2呎范围）
-		IF ~~ THEN REPLY @28 GOTO xpexchange0	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",1)~ THEN REPLY @28 GOTO xpselect1	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",2)~ THEN REPLY @28 GOTO xpselect2	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",3)~ THEN REPLY @28 GOTO xpselect3	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",4)~ THEN REPLY @28 GOTO xpselect4	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",5)~ THEN REPLY @28 GOTO xpselect5	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",6)~ THEN REPLY @28 GOTO xpselect6	//	如果付出不一样的经验点数，可以交换其它技能吗？
 	END
 
-	IF ~~ THEN BEGIN xpexchange9
+	IF ~~ THEN BEGIN abselect9
 		SAY @29	//选择你希望掌握的武器类型。
 		IF ~~ THEN REPLY @920 DO ~ReallyForceSpellRES("XPEXCH01",Myself)
 		ReallyForceSpellRES("XPEXCH02",Myself)
@@ -793,42 +877,92 @@ APPEND ~%dlgname%~
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)
 		ReallyForceSpellRES("XPEXCH03",Myself)~ GOTO giveability5	///39	投石索
-		IF ~~ THEN REPLY @28 GOTO xpexchange0	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",1)~ THEN REPLY @28 GOTO xpselect1	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",2)~ THEN REPLY @28 GOTO xpselect2	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",3)~ THEN REPLY @28 GOTO xpselect3	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",4)~ THEN REPLY @28 GOTO xpselect4	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",5)~ THEN REPLY @28 GOTO xpselect5	//	如果付出不一样的经验点数，可以交换其它技能吗？
+		IF ~Global("XPEXCHAR","LOCALS",6)~ THEN REPLY @28 GOTO xpselect6	//	如果付出不一样的经验点数，可以交换其它技能吗？
 	END
 
 	IF ~~ THEN BEGIN giveability1
 		SAY @31	//那好，我们来交换吧……
-		IF ~~ THEN DO ~SetGlobal("XPEXHANG","LOCALS",1)
-		SetInterrupt(FALSE)
-		SmallWait(2)~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0A",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0A",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0A",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0A",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0A",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0A",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1A",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1A",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1A",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1A",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1A",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1A",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
 	END
 
 	IF ~~ THEN BEGIN giveability2
 		SAY @31	//那好，我们来交换吧……
-		IF ~~ THEN DO ~SetGlobal("XPEXHANG","LOCALS",2)
-		SetInterrupt(FALSE)
-		SmallWait(2)~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0B",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0B",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0B",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0B",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0B",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0B",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1B",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1B",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1B",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1B",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1B",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1B",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
 	END
 
 	IF ~~ THEN BEGIN giveability3
 		SAY @31	//那好，我们来交换吧……
-		IF ~~ THEN DO ~SetGlobal("XPEXHANG","LOCALS",3)
-		SetInterrupt(FALSE)
-		SmallWait(2)~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0C",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0C",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0C",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0C",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0C",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0C",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1C",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1C",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1C",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1C",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1C",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1C",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
 	END
 
 	IF ~~ THEN BEGIN giveability4
 		SAY @31	//那好，我们来交换吧……
-		IF ~~ THEN DO ~SetGlobal("XPEXHANG","LOCALS",4)
-		SetInterrupt(FALSE)
-		SmallWait(2)~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0D",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0D",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0D",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0D",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0D",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0D",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1D",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1D",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1D",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1D",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1D",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1D",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
 	END
 
 	IF ~~ THEN BEGIN giveability5
 		SAY @31	//那好，我们来交换吧……
-		IF ~~ THEN DO ~SetGlobal("XPEXHANG","LOCALS",5)
-		SetInterrupt(FALSE)
-		SmallWait(2)~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0E",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0E",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0E",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0E",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0E",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~!NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH0E",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",1)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1E",Player1) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",2)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1E",Player2) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",3)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1E",Player3) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",4)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1E",Player4) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",5)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1E",Player5) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~NightmareModeOn() Global("XPEXCHAR","LOCALS",6)~ THEN DO ~SetInterrupt(FALSE) SmallWait(2) ForceSpellRES("XPEXCH1E",Player6) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
 	END
 
 END
