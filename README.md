@@ -130,6 +130,9 @@ To exchange 5 million experience points for:
 
 ////////////////////////////Version History/////////////////////////////
 
+v1.3
+As some MODs may rewrite weapon mastery, this MOD now read the current name of weapon class instead of original ones on install.
+
 v1.2
 The installation option is set as a two-option selection.
 For all language versions, unify the dialogue to adopt a tone befitting the establishment of a pact, moving away from mundane options. The Chinese version is written by ✧≡ω≡．*, while the English and French versions are developed by DeepSeek.

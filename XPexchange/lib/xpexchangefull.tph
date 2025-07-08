@@ -41,6 +41,21 @@ ACTION_IF (~%wishbcs1%~ STRING_COMPARE_CASE ~%wishbcs2%~ != 0) BEGIN	//相等时
 END
 */
 
+//读取武器类型的当前名称
+COPY_EXISTING ~WEAPPROF.2DA~ ~override~
+	COUNT_2DA_ROWS 12 rows
+	FOR ( index = 1 ; index < rows ; index = index + 1 ) BEGIN
+		READ_2DA_ENTRY index 1 12 wprof_id
+		PATCH_IF wprof_id < 116 BEGIN
+			READ_2DA_ENTRY index 2 12 wprof_name
+			GET_STRREF wprof_name wprof_string
+			PATCH_IF (~%wprof_string%~ STRING_CONTAINS_REGEXP ~Invalid Strref~)&&(STRING_LENGTH ~%wprof_string%~ != 0) BEGIN	
+				SPRINT ~wp%wprof_id%~ ~%wprof_string%~
+			END
+		END
+	END
+BUT_ONLY
+
 //巴尔遗产模式，根据经验上限提供两种模式
 ACTION_IF (xplimit < 15000000) & (xplimit > 0) BEGIN
 	COPY_EXISTING ~XPEXCH0A.spl~ ~override/XPEXCH1A.spl~

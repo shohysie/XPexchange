@@ -133,6 +133,9 @@ La liste des capacités échangeables contre 5 000 000 de points d'expérience e
 
 ///////////////////////////Version historique/////////////////////////////
 
+v1.3
+Étant donné que certains MODs peuvent modifier le type de maîtrise d'arme, ce MOD récupère désormais automatiquement le nom actuel de la classe d'arme plutôt que le nom fixe de la version originale lors de l'installation.‌
+
 v1.2
 L'option d'installation propose un choix binaire (2 options disponibles).
 Pour toutes les versions linguistiques, unifiez les dialogues en adoptant un ton solennel de conclusion de pacte, plutôt que des options banales. Version chinoise : rédigée par ✧≡ω≡．* Versions anglaise et française : développées par DeepSeek.
