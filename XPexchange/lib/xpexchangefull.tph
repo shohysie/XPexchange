@@ -2,17 +2,48 @@ COPY ~%MOD_FOLDER%/eff~ ~override~
 
 COPY ~%MOD_FOLDER%/spl/noname~ ~override~
 
-COPY ~%MOD_FOLDER%/spl/XPEXCHD7.spl~ ~override~
-SAY 0xce @6	//不死生物毁灭Undead destroyed
+COPY_EXISTING ~SPCL144.spl~ ~override/SY#XPEA1.spl~	//提气斩
+	LPF ALTER_SPELL_HEADER INT_VAR target = 7 END
+	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 250 target = 1 END
+	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 142 target = 1 END
+	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 328 target = 1 END
+	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 282 target = 1 END
+	LPF ALTER_SPELL_EFFECT INT_VAR match_opcode = 174 target = 1 END
 
-COPY ~%MOD_FOLDER%/spl/XPEXCHE3.spl~ ~override~
-SAY 0xce @7	//斩首一击Vorpal Hit
+COPY ~%MOD_FOLDER%/spl/SY#XPEC4.spl~ ~override~
+	SAY NAME1 @70
+	SAY UNIDENTIFIED_DESC @71
+COPY ~%MOD_FOLDER%/spl/SY#XPED4.spl~ ~override~
+	SAY NAME1 @72
+	SAY UNIDENTIFIED_DESC @73
+COPY ~%MOD_FOLDER%/spl/SY#XPEE5.spl~ ~override~
+	SAY NAME1 @74
+	SAY UNIDENTIFIED_DESC @75
+COPY ~%MOD_FOLDER%/spl/SY#XPEF6.spl~ ~override~
+	SAY NAME1 @76
+	SAY UNIDENTIFIED_DESC @77
+	
+COPY ~%MOD_FOLDER%/spl/SY#XPEG6.spl~ ~override~
+	SAY NAME1 @80
+	SAY UNIDENTIFIED_DESC @81
+COPY ~%MOD_FOLDER%/spl/SY#XPEH1.spl~ ~override~
+	SAY NAME1 @82
+	SAY UNIDENTIFIED_DESC @83
+
+COPY ~%MOD_FOLDER%/spl/SY#XPEG3.spl~ ~override~
+SAY 0xce @56	//不死生物毁灭/Undead destroyed/Mort-vivant détruit
+
+COPY ~%MOD_FOLDER%/spl/SY#XPEGA.spl~ ~override~
+SAY 0xce @57	//异界生物驱逐/Outsider Banished/Créature extraplanaire bannie
+
+COPY ~%MOD_FOLDER%/spl/SY#XPEG5.spl~ ~override~
+SAY 0xce @58	//斩首一击/Vorpal Hit/Coup Vorpal
 
 COPY_EXISTING ~xpcap.2da~ ~override~
 	READ_2DA_ENTRY 4 1 2 xplimit
 BUT_ONLY
 
-COPY ~%MOD_FOLDER%/itm/XPEXCHGL.itm~ ~override~
+COPY ~%MOD_FOLDER%/itm/SY#XPEGL.itm~ ~override~
 SAY NAME2 @51
 SAY IDENTIFIED_DESC @52
 
@@ -56,80 +87,132 @@ COPY_EXISTING ~WEAPPROF.2DA~ ~override~
 	END
 BUT_ONLY
 
-//巴尔遗产模式，根据经验上限提供两种模式
-ACTION_IF (xplimit < 15000000) & (xplimit > 0) BEGIN
-	COPY_EXISTING ~XPEXCH0A.spl~ ~override/XPEXCH1A.spl~
-	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-500000" END
-	COPY_EXISTING ~XPEXCH0B.spl~ ~override/XPEXCH1B.spl~
-	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-750000" END
-	COPY_EXISTING ~XPEXCH0C.spl~ ~override/XPEXCH1C.spl~
-	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1000000" END
-	COPY_EXISTING ~XPEXCH0D.spl~ ~override/XPEXCH1D.spl~
-	FOR (index = 1; index < 28 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
-		PATCH_IF index < 15 BEGIN
-			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1250000" header = "%index%" END
-		END ELSE BEGIN
-			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1500000" header = "%index%" END
+//遗产模式经验值多扣50%
+COPY_EXISTING ~SY#XPE0A.spl~ ~override/SY#XPE1A.spl~	//500w
+LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-250000" END
+COPY_EXISTING ~SY#XPE0B.spl~ ~override/SY#XPE1B.spl~	//100w
+LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-500000" END
+COPY_EXISTING ~SY#XPE0C.spl~ ~override/SY#XPE1C.spl~ ~SY#XPE0I.spl~ ~override/SY#XPE1I.spl~	//150w
+LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-750000" END
+COPY_EXISTING ~SY#XPE0D.spl~ ~override/SY#XPE1D.spl~	//200w
+LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1000000" END
+COPY_EXISTING ~SY#XPE0E.spl~ ~override/SY#XPE1E.spl~	//250w
+LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1250000" END
+COPY_EXISTING ~SY#XPE0F.spl~ ~override/SY#XPE1F.spl~	//300w
+LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1500000" END
+COPY_EXISTING ~SY#XPE0G.spl~ ~override/SY#XPE1G.spl~	//400w
+LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2000000" END
+COPY_EXISTING ~SY#XPE0H.spl~ ~override/SY#XPE1H.spl~	//500w
+LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2500000" END
+
+//需要记录：kit（含基础职业）名称对应字符串，用于对话显示；kit.ids中的数值或名称，用于AddKit()；同时还需要能分基础职业种类进行调用
+//kitlist.2da和kit.ids的宗派名称和数值严格对应，但没有基础职业描述。简单起见，基础职业不放入表格，仅读取kitlist.2da
+COPY_EXISTING ~kitlist.2da~ ~override~
+	COUNT_2DA_ROWS 9 kitsmax
+	FOR (kitrow = 2 ; kitrow < kitsmax + 1 ; ++kitrow) BEGIN
+		READ_2DA_ENTRY kitrow 1 9 kitname
+		READ_2DA_ENTRY kitrow 2 9 lowername
+		READ_2DA_ENTRY kitrow 8 9 classid
+		READ_2DA_ENTRY kitrow 9 9 kitidhex
+		SET kittemp = kitidhex + 1
+		SET kitid = kittemp - 1
+		PATCH_IF FILE_CONTAINS_EVALUATED (~kit.ids~ ~%kitname%~) BEGIN
+			PATCH_IF classid == 1 BEGIN SET $magekit(~%kitid%~) = lowername END
+			PATCH_IF classid == 2 BEGIN SET $fighterkit(~%kitid%~) = lowername END
+			PATCH_IF classid == 3 BEGIN SET $clerickit(~%kitid%~) = lowername END
+			PATCH_IF classid == 4 BEGIN SET $thiefkit(~%kitid%~) = lowername END
+			PATCH_IF classid == 5 BEGIN SET $bardkit(~%kitid%~) = lowername END
+			PATCH_IF classid == 6 BEGIN SET $paladinkit(~%kitid%~) = lowername END
+			PATCH_IF classid == 11 BEGIN SET $druidkit(~%kitid%~) = lowername END
+			PATCH_IF classid == 12 BEGIN SET $rangerkit(~%kitid%~) = lowername END
+			PATCH_IF classid == 19 BEGIN SET $sorcererkit(~%kitid%~) = lowername END
+			PATCH_IF classid == 20 BEGIN SET $monkkit(~%kitid%~) = lowername END
+			PATCH_IF classid == 21 BEGIN SET $shamankit(~%kitid%~) = lowername END
 		END
 	END
-	COPY_EXISTING ~XPEXCH0E.spl~ ~override/XPEXCH1E.spl~
-	FOR (index = 1; index < 39 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
-		PATCH_IF index < 10 BEGIN
-			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2000000" header = "%index%" END
-		END ELSE BEGIN
-			PATCH_IF index < 19 BEGIN 
-				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2500000" header = "%index%" END
-			END ELSE BEGIN
-				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-500000" header = "%index%" END
-			END
+BUT_ONLY
+
+COPY ~%MOD_FOLDER%/dlg/ADD0.d~ ~%MOD_FOLDER%/dlg/ADD1.d~
+
+COPY ~%MOD_FOLDER%/dlg/ADD1.d~ ~%MOD_FOLDER%/dlg/ADD1.d~
+	FOR (plnum = 1 ; plnum < 7 ; ++plnum) BEGIN
+		PHP_EACH magekit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,MAGE) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,MAGE) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,MAGE) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH fighterkit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,FIGHTER) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,FIGHTER) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,FIGHTER) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH clerickit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,CLERIC) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,CLERIC) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,CLERIC) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH thiefkit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,THIEF) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,THIEF) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,THIEF) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH bardkit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,BARD) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,BARD) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,BARD) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH paladinkit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,PALADIN) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,PALADIN) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,PALADIN) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH druidkit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,DRUID) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,DRUID) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,DRUID) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH rangerkit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,RANGER) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,RANGER) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,RANGER) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH sorcererkit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,SORCERER) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,SORCERER) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,SORCERER) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH monkkit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,MONK) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,MONK) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,MONK) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
+		END
+		PHP_EACH shamankit AS kitid => lowername BEGIN
+		//PATCH_PRINT ~%kitid% %lowername%~
+			REPLACE_TEXTUALLY ~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,SHAMAN) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~
+			~~~~~IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY #%lowername% DO ~ChangeClass(Player%plnum%,SHAMAN) ClearActions(Player%plnum%)ActionOverride(Player%plnum%,AddKit(%kitid%)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT
+		IF ~Global("SY#XPEAR","LOCALS",%plnum%)~ THEN REPLY @1532 DO ~ChangeClass(Player%plnum%,SHAMAN) ClearActions(Player%plnum%) ActionOverride(Player%plnum%,AddKit(0)) CreateVisualEffectObject("SPUSEANY",Player%plnum%) ForceSpell(Myself,DRYAD_TELEPORT) DestroySelf()~ EXIT~~~~~ EVALUATE_BUFFER
 		END
 	END
 
-	OUTER_SPRINT dlgname ~%wishdlg1%~
-	COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD0.d~
-	ACTION_IF (~%wishdlg1%~ STRING_COMPARE_CASE ~%wishdlg2%~ != 0) BEGIN	//相等时STRING_COMPARE取0
-		OUTER_SPRINT dlgname ~%wishdlg2%~
-		COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD0.d~
-	END
-END ELSE BEGIN	
-	COPY_EXISTING ~XPEXCH0A.spl~ ~override/XPEXCH1A.spl~
-	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1500000" END
-	COPY_EXISTING ~XPEXCH0B.spl~ ~override/XPEXCH1B.spl~
-	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2250000" END
-	COPY_EXISTING ~XPEXCH0C.spl~ ~override/XPEXCH1C.spl~
-	LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-3000000" END
-	COPY_EXISTING ~XPEXCH0D.spl~ ~override/XPEXCH1D.spl~
-	FOR (index = 1; index < 28 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
-		PATCH_IF index < 15 BEGIN 
-			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-3750000" header = "%index%" END
-		END ELSE BEGIN
-			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-4500000" header = "%index%" END
-		END
-	END
-	COPY_EXISTING ~XPEXCH0E.spl~ ~override/XPEXCH1E.spl~
-	FOR (index = 1; index < 39 ; ++index) BEGIN	//此处如果增加了能力列表要跟着修改
-		PATCH_IF index < 10 BEGIN 
-			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-5000000" header = "%index%" END
-			LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1000000" header = "%index%" END
-		END ELSE BEGIN
-			PATCH_IF index < 19 BEGIN 
-				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-5000000" header = "%index%" END
-				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2500000" header = "%index%" END
-			END ELSE BEGIN
-				LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-1500000" header = "%index%" END
-			END
-		END
-	END
-
-	OUTER_SPRINT dlgname ~%wishdlg1%~
+OUTER_SPRINT dlgname ~%wishdlg1%~
+COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD1.d~
+ACTION_IF (~%wishdlg1%~ STRING_COMPARE_CASE ~%wishdlg2%~ != 0) BEGIN	//相等时STRING_COMPARE取0
+	OUTER_SPRINT dlgname ~%wishdlg2%~
 	COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD1.d~
-	ACTION_IF (~%wishdlg1%~ STRING_COMPARE_CASE ~%wishdlg2%~ != 0) BEGIN	//相等时STRING_COMPARE取0
-		OUTER_SPRINT dlgname ~%wishdlg2%~
-		COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD1.d~
-	END
 END
 
 /*
+
 ACTION_FOR_EACH dlgname IN ~wish~ ~wish25~ BEGIN
 	ACTION_IF FILE_EXISTS_IN_GAME ~%dlgname%.dlg~ BEGIN
 		COMPILE EVALUATE_BUFFER ~%MOD_FOLDER%/dlg/ADD.d~

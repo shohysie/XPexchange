@@ -1,7 +1,7 @@
 BACKUP ~XPexchange/backup~
 AUTHOR ~shohy@126.com~
 
-VERSION ~v1.2~
+VERSION ~v1.4~
 AUTO_EVAL_STRINGS
 
 README ~%MOD_FOLDER%/README.%LANGUAGE%.txt~
@@ -36,8 +36,8 @@ BUT_ONLY
 
 COPY_EXISTING ~%wishdlg1%.dlg~ ~override~ ~%wishdlg2%.dlg~ ~override~
 	DECOMPILE_AND_PATCH BEGIN
-		REPLACE_TEXTUALLY ~~~~~Class(Player[1-6],MAGE)~~~~~ ~~~~~True()~~~~~
-		REPLACE_TEXTUALLY ~~~~~!Class(Player[1-6],SHAMAN)~~~~~ ~~~~~False()~~~~~
+		REPLACE_TEXTUALLY ~GlobalGT("SY#XPE99","LOCALS",0)~ ~True()~
+		REPLACE_TEXTUALLY ~!GlobalGT("SY#XPE88","LOCALS",0)~ ~False()~
 	END
 BUT_ONLY
 
