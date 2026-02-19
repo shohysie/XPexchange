@@ -108,12 +108,12 @@ LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2
 //需要记录：kit（含基础职业）名称对应字符串，用于对话显示；kit.ids中的数值或名称，用于AddKit()；同时还需要能分基础职业种类进行调用
 //kitlist.2da和kit.ids的宗派名称和数值严格对应，但没有基础职业描述。简单起见，基础职业不放入表格，仅读取kitlist.2da
 COPY_EXISTING ~kitlist.2da~ ~override~
-	COUNT_2DA_ROWS 9 kitsmax
+	COUNT_2DA_ROWS 10 kitsmax
 	FOR (kitrow = 2 ; kitrow < kitsmax + 1 ; ++kitrow) BEGIN
-		READ_2DA_ENTRY kitrow 1 9 kitname
-		READ_2DA_ENTRY kitrow 2 9 lowername
-		READ_2DA_ENTRY kitrow 8 9 classid
-		READ_2DA_ENTRY kitrow 9 9 kitidhex
+		READ_2DA_ENTRY kitrow 1 10 kitname
+		READ_2DA_ENTRY kitrow 2 10 lowername
+		READ_2DA_ENTRY kitrow 8 10 classid
+		READ_2DA_ENTRY kitrow 9 10 kitidhex
 		SET kittemp = kitidhex + 1
 		SET kitid = kittemp - 1
 		PATCH_IF FILE_CONTAINS_EVALUATED (~kit.ids~ ~%kitname%~) BEGIN
