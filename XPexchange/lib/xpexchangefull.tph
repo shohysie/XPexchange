@@ -108,26 +108,32 @@ LPF ADD_SPELL_EFFECT INT_VAR opcode = 104 target = 2 timing = 1 parameter1 = "-2
 //需要记录：kit（含基础职业）名称对应字符串，用于对话显示；kit.ids中的数值或名称，用于AddKit()；同时还需要能分基础职业种类进行调用
 //kitlist.2da和kit.ids的宗派名称和数值严格对应，但没有基础职业描述。简单起见，基础职业不放入表格，仅读取kitlist.2da
 COPY_EXISTING ~kitlist.2da~ ~override~
-	COUNT_2DA_ROWS 10 kitsmax
+	COUNT_2DA_ROWS 9 kitsmax
 	FOR (kitrow = 2 ; kitrow < kitsmax + 1 ; ++kitrow) BEGIN
-		READ_2DA_ENTRY kitrow 1 10 kitname
-		READ_2DA_ENTRY kitrow 2 10 lowername
-		READ_2DA_ENTRY kitrow 8 10 classid
-		READ_2DA_ENTRY kitrow 9 10 kitidhex
-		SET kittemp = kitidhex + 1
-		SET kitid = kittemp - 1
-		PATCH_IF FILE_CONTAINS_EVALUATED (~kit.ids~ ~%kitname%~) BEGIN
-			PATCH_IF classid == 1 BEGIN SET $magekit(~%kitid%~) = lowername END
-			PATCH_IF classid == 2 BEGIN SET $fighterkit(~%kitid%~) = lowername END
-			PATCH_IF classid == 3 BEGIN SET $clerickit(~%kitid%~) = lowername END
-			PATCH_IF classid == 4 BEGIN SET $thiefkit(~%kitid%~) = lowername END
-			PATCH_IF classid == 5 BEGIN SET $bardkit(~%kitid%~) = lowername END
-			PATCH_IF classid == 6 BEGIN SET $paladinkit(~%kitid%~) = lowername END
-			PATCH_IF classid == 11 BEGIN SET $druidkit(~%kitid%~) = lowername END
-			PATCH_IF classid == 12 BEGIN SET $rangerkit(~%kitid%~) = lowername END
-			PATCH_IF classid == 19 BEGIN SET $sorcererkit(~%kitid%~) = lowername END
-			PATCH_IF classid == 20 BEGIN SET $monkkit(~%kitid%~) = lowername END
-			PATCH_IF classid == 21 BEGIN SET $shamankit(~%kitid%~) = lowername END
+		READ_2DA_ENTRY kitrow 1 9 kitname
+		READ_2DA_ENTRY kitrow 2 9 lowername
+		READ_2DA_ENTRY kitrow 8 9 classid
+		INNER_ACTION BEGIN 
+			COPY_EXISTING ~kit.ids~ ~override~
+				COUNT_2DA_ROWS 2 kitidmax
+				FOR (kitidrow = 1 ; kitidrow < kitidmax + 1 ; ++kitidrow) BEGIN
+					READ_2DA_ENTRY kitidrow 0 2 kitid
+					READ_2DA_ENTRY kitidrow 1 2 kitidname
+					PATCH_IF ~kitidname~ STRING_EQUAL_CASE ~kitname~ THEN BEGIN
+						PATCH_IF classid == 1 BEGIN SET $magekit(~%kitid%~) = lowername END
+						PATCH_IF classid == 2 BEGIN SET $fighterkit(~%kitid%~) = lowername END
+						PATCH_IF classid == 3 BEGIN SET $clerickit(~%kitid%~) = lowername END
+						PATCH_IF classid == 4 BEGIN SET $thiefkit(~%kitid%~) = lowername END
+						PATCH_IF classid == 5 BEGIN SET $bardkit(~%kitid%~) = lowername END
+						PATCH_IF classid == 6 BEGIN SET $paladinkit(~%kitid%~) = lowername END
+						PATCH_IF classid == 11 BEGIN SET $druidkit(~%kitid%~) = lowername END
+						PATCH_IF classid == 12 BEGIN SET $rangerkit(~%kitid%~) = lowername END
+						PATCH_IF classid == 19 BEGIN SET $sorcererkit(~%kitid%~) = lowername END
+						PATCH_IF classid == 20 BEGIN SET $monkkit(~%kitid%~) = lowername END
+						PATCH_IF classid == 21 BEGIN SET $shamankit(~%kitid%~) = lowername END
+					END
+				END
+			BUT_ONLY
 		END
 	END
 BUT_ONLY
