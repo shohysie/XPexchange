@@ -3,7 +3,7 @@ When any teammate has enough experience points, cast Wish or Limited Wish Spell 
 	1. The character must be with single-class (Component 2 removes this restriction);
 	2. The character must have more than 0.5 million experience points (0.75 million for Legacy of Bhaal mode);
 
-For the following exchange lists, 1.5 times of experience points are required for Legacy of Bhaal mode.
+For the following exchange lists, 1.5 times of experience points are required for Legacy of Bhaal mode. If EEex is installed, you may choose to add trade options adapted for EEex, but they will not work with Infinity Engine 2.7 and compatibility is not guaranteed.
 
 To exchange 0.5 million experience points for:
 	Adamantine Hide (+1 AC bonus)
@@ -146,7 +146,7 @@ To exchange 2.5 million experience points for:
 	Disarm Master (On a successful melee hit, the target must make a Breath saving throw at -2 penalty or be disarmed. Ineffective against creatures using natural weapons or exotic weapons)
 	Disarming Palm (When fighting unarmed, you have a 15% chance to parry a melee attack and attempt a disarm. The attacker must then make a Breath saving throw at -2 penalty or be disarmed)
 
-To exchange 3 million experience points for:yourself invisible again). 
+To exchange 3 million experience points for:
 	Deathless Mantle (Gain immunity to instant death, including Petrification, Disintegration, and effects of spells as Finger of Death, Wail of the Banshee, etc)
 	Unbound Stride (Gain immunity to negative effects on movement, including slow, stun, hold, entangle, web and greasy)
 	Stellar Covenant (+1 to level 8 and level 9 wizard spell slots)
@@ -195,7 +195,32 @@ To exchange 5 million experience points for:
 	High Myopia (Restricting visual range to 2', with a complimentary pair of myopia glasses)
 	Legacy Rebirth (Reset experience to zero, change class and kit, retaining acquired passive abilities and special skills)
 
+Additional options with EEex:
+	For 2 million XP:
+	Piercing Strike (Release a forward-reaching energy blade that strikes each target along its path with a normal attack roll, with a +10 bonus to hit and damage).
+	Cruciform Judgment (Unleash outward-expanding cross-shaped slashes that strike each target along their path with a normal attack roll, with a +4 bonus to hit and damage).
+	Blade Vortex (Spin your weapon around yourself, striking all creatures within a 7-foot radius. Each target is subject to a single normal attack roll).
+	For 3 million XP:
+	Blade Barricade (Create a 9-foot wall of spinning blades with your weapon, lasting 3 rounds. Once per round, it attacks nearby creatures, resolved as a normal attack by the caster).
+	For 4 million XP:
+	Hunter's Mark (A marked target suffers an additional attack each time it is hit within one round, with a minimum interval of 0.4 seconds between additional attacks, resolved as a normal attack by the caster).
+	Retributive Strike (Whenever an enemy's melee attack misses you, you immediately retaliate against the nearest enemy, resolved as a normal attack).
+	Spell Twinning (Any spell you cast is duplicated, unleashing two identical spells, as Wild Surge, overriding other Wild Surge effects).
+	For 5 million XP:
+	Perfect Two-Weapon Fighting (When a melee attack hits an enemy, gain one additional off-hand attack per round, or two additional attacks when under Haste).
+	Spell Ripple (When casting, the spell also targets all creatures near the target, as Wild Surge, overriding other Wild Surge effects). 
+	Annihilation Incantation (Any spell you cast ignores the target's saving throw, as Wild Surge, overriding other Wild Surge effects).
+
 ////////////////////////////Version History/////////////////////////////
+
+v1.6
+Added EEex compatibility options, providing more interesting abilities.
+Adjusted the experience point requirements for a few options.
+
+v1.5
+Fixed an issue where certain abilities could no longer be obtained at the same tier after being exchanged.
+Fixed an issue where Legacy Rebirth did not allow selection of a kit.
+Legacy Rebirth now allows multiclassing; however, to prevent issues, characters who have already changed class or multiclassed cannot undergo Legacy Rebirth.
 
 v1.4
 For compatibility, the filename prefix has been modified.

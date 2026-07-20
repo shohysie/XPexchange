@@ -1,0 +1,84 @@
+//如果已经安装EEex，检测有没有自定义函数
+
+ACTION_IF RESOURCE_CONTAINS ~ACTION.IDS~ ~EEex_LuaAction~ THEN BEGIN
+	OUTER_WHILE NOT(IS_AN_INT %howtodoeeex%) || (%howtodoeeex% > 2) || (%howtodoeeex% < 1) BEGIN
+		PRINT @10000	//检测到EEex存在。若安装适配EEex的特殊模块，可实现更多效果如副手多攻击一次，但不保证兼容性。输入1安装特殊模块，输入2正常安装：
+		ACTION_READLN  howtodoeeex
+PRINT ~howtodoeeex0=%howtodoeeex%~
+	END
+END ELSE BEGIN
+	OUTER_SET howtodoeeex = 2
+END
+
+ACTION_IF howtodoeeex == 1 THEN BEGIN
+PRINT ~howtodoeeex1=%howtodoeeex%~
+	ACTION_IF FILE_EXISTS_IN_GAME ~M_Stick.lua~ THEN BEGIN	//已经安装了StickLuaFunctions？
+		ACTION_IF NOT ((RESOURCE_CONTAINS ~M_Stick.lua~ ~ST_GetCurrentWeapon~) && (RESOURCE_CONTAINS ~M_Stick.lua~ ~ST_MockAttack~)) THEN BEGIN	//没有必须函数，可能是低版本或其它函数
+			COPY_EXISTING ~M_Stick.lua~ ~override~
+				APPEND_FILE ~%MOD_FOLDER%/LUA/M_Stick.lua~
+			BUT_ONLY
+		END ELSE BEGIN	//有必须函数，检测版本能不能用
+			ACTION_IF NOT (RESOURCE_CONTAINS ~M_Stick.lua~ ~return weaponRes1, weaponRes2, fightingStyle, isLeftAttack~) THEN BEGIN	//可能是旧版，函数输出不合适
+				COPY ~%MOD_FOLDER%/LUA/M_Stick.lua~ ~override~
+			END
+		END
+	END ELSE BEGIN	//没有此函数文件
+		COPY ~%MOD_FOLDER%/LUA/M_Stick.lua~ ~override~
+	END
+	//修改文字
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~statsIndex >= 89 and statsIndex <= 108~ THEN BEGIN
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			REPLACE_TEXTUALLY ~statsIndex >= 89 and statsIndex <= 108~ ~statsIndex <= 108~
+	END
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~weaponProficiencyIndex >= 89 and weaponProficiencyIndex <= 108~ THEN BEGIN
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			REPLACE_TEXTUALLY ~weaponProficiencyIndex >= 89 and weaponProficiencyIndex <= 108~ ~weaponProficiencyIndex <= 108~
+	END
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~Infinity_FetchString(16460)~ THEN BEGIN	//命中 没中 Hit Miss Touché Raté
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			SET tempstres = RESOLVE_STR_REF(@10001)
+			REPLACE_TEXTUALLY ~Infinity_FetchString(16461)~ ~Infinity_FetchString(%tempstres%)~
+	END
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~Infinity_FetchString(16461)~ THEN BEGIN	//命中 没中 Hit Miss Touché Raté
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			SET tempstres = RESOLVE_STR_REF(@10002)
+			REPLACE_TEXTUALLY ~Infinity_FetchString(16461)~ ~Infinity_FetchString(%tempstres%)~
+	END
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~Infinity_FetchString(11025)~ THEN BEGIN	//武器无效。 Weapon Ineffective. Arme inefficace.
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			SET tempstres = RESOLVE_STR_REF(@10003)
+			REPLACE_TEXTUALLY  ~Infinity_FetchString(11025)~ ~Infinity_FetchString(%tempstres%)~
+	END
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~Infinity_FetchString(8715)~ THEN BEGIN	//副手攻击 Attack Roll (Off-hand) Jet d'attaque (gauche)
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			SET tempstres = RESOLVE_STR_REF(@10004)
+			REPLACE_TEXTUALLY  ~Infinity_FetchString(8715)~ ~Infinity_FetchString(%tempstres%)~
+	END
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~Infinity_FetchString(14643)~ THEN BEGIN	//攻击检定 Attack Roll  Jet d'attaque （英文法文有空格）
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			SET tempstres = RESOLVE_STR_REF(@10005)
+			REPLACE_TEXTUALLY  ~Infinity_FetchString(14643)~ ~Infinity_FetchString(%tempstres%)~
+	END
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~Infinity_FetchString(16462)~ THEN BEGIN	//致命一击 严重失误 Critical Hit Critical Miss Coup critique Échec critique
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			SET tempstres = RESOLVE_STR_REF(@10006)
+			REPLACE_TEXTUALLY ~Infinity_FetchString(16462)~  ~Infinity_FetchString(%tempstres%)~
+	END
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~Infinity_FetchString(16463)~ THEN BEGIN	//致命一击 严重失误 Critical Hit Critical Miss Coup critique Échec critique
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			SET tempstres = RESOLVE_STR_REF(@10007)
+			REPLACE_TEXTUALLY ~Infinity_FetchString(16463)~  ~Infinity_FetchString(%tempstres%)~
+	END
+	ACTION_IF RESOURCE_CONTAINS ~M_Stick.lua~ ~Infinity_FetchString(20696)~ THEN BEGIN	//致命一击被头盔挡住 Critical Hit Averted Coup critique détourné
+		COPY_EXISTING ~M_Stick.lua~ ~override~
+			SET tempstres = RESOLVE_STR_REF(@10008)
+			REPLACE_TEXTUALLY ~Infinity_FetchString(20696)~  ~Infinity_FetchString(%tempstres%)~
+	END
+	//有EEex，添加自定义函数
+	COPY ~%MOD_FOLDER%/LUA/M_SYATK.lua~ ~override~
+	
+	OUTER_SPRINT DLGNAME ~ADD2~
+END ELSE BEGIN
+	OUTER_SPRINT DLGNAME ~ADD0~
+END
+PRINT ~DLGNAME=%DLGNAME%~

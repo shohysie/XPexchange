@@ -3,7 +3,7 @@ En lançant un Souhait ou un Souhait limité, une nouvelle option d'échange app
     Le personnage doit être mono-classe (le composant 2 permet aux personnages multi-classes d'échanger, mais son installation n'est pas recommandée car elle briserait l'équilibre).
     Le personnage doit avoir plus de 500 000 points d'expérience pour pouvoir échanger (750 000 en difficulté Succession de Bhaal).
 
-‌Liste d'échanges‌ : Dans les jeux en difficulté Succession de Bhaal, le coût en expérience est multiplié par ‌1,5x.
+‌Liste d'échanges‌ : Dans les jeux en difficulté Succession de Bhaal, le coût en expérience est multiplié par ‌1,5x. Si EEex est installé, vous pouvez choisir d'ajouter des options de commerce adaptées à EEex, mais elles ne fonctionneront pas avec Infinity Engine 2.7 et la compatibilité n'est pas garantie.
 
 La liste des capacités échangeables contre 500 000 de points d'expérience est la suivante:
 	Peau blindée (+1 bonus à la classe d'armure)
@@ -131,7 +131,7 @@ La liste des capacités échangeables contre 2 500 000 de points d'expérience e
 	Sort Signature (+1 emplacement de sorts de niveau 6 et 7 pour les mages)
 	Oracle divin (+1 emplacement de sorts de niveau 6 et 7 pour les clercs)
 	Vent propice (Être affecté par Hâte en permanence)
-	Assaut Frénétique (+0,5 attaques par round). "
+	Assaut Frénétique (+0,5 attaques par round). 
 	Incantateur aguerri (+1 à la vitesse d'incantation)
 	Assassin vétéran (+1 au multiplicateur d'attaque sournoise. Efficace uniquement pour les roublards et les rangers)
 	Frappe foudroyante (Un coup critique étourdit l'ennemi pendant un round, aucun jet de sauvegarde [remplace les autres effets de coup critique])
@@ -157,7 +157,7 @@ La liste des capacités échangeables contre 3 000 000 de points d'expérience e
 	Maître du Corps-à-corps (Chaque attaque a 20% de chances de renverser l'ennemi [aucun jet de sauvegarde] pendant un round. Les sélections répétées ne se cumulent pas)
 	Toucher du Léthargique (Chaque attaque a 30% de chances de ralentir l'ennemi [aucun jet de sauvegarde] pendant un round. Les sélections répétées ne se cumulent pas)
 	Ancre de l'âme (Immunité à Repousser les morts-vivants)
-	Furtif cuirassé (Peut utiliser les compétences de roublard même en portant une armure lourde, etc.)"
+	Furtif cuirassé (Peut utiliser les compétences de roublard même en portant une armure lourde, etc.)
 	Maître du Poison (Empoisonner l'ennemi pendant 15 secondes [aucun jet de sauvegarde]. Lorsque l'ennemi est empoisonné, il subit 1 point de dégât par seconde)
 	Disparition ombrageuse (Une attaque sournoise réussie vous rend à nouveau invisible [remplace les autres effets d'attaque sournoise])
 	Drain magique (Chaque attaque diminue de 5% la résistance à la magie et de 1 la classe d'armure, pendant 5 tours)
@@ -178,7 +178,7 @@ La liste des capacités échangeables contre 4 000 000 de points d'expérience e
 	Décapitation implacable (Chaque coup critique devient un coup Vorpal, aucun jet de sauvegarde [remplace les autres effets de coup critique])
 	Art de l'ombre légendaire : Jumeau de l'Ombre (Obtient la capacité de haut niveau du Maîtres des Ombres : Jumeau de l'Ombre)
 	Inspiration durable (Les effets des chants de barde durent dix fois plus longtemps [Les sélections répétées ne se cumulent pas])
-	Sort immobile (Peut lancer des sorts même en portant une armure lourde, etc.)"
+	Sort immobile (Peut lancer des sorts même en portant une armure lourde, etc.)
 	Jugement Inverse (Échange les points de vie avec la créature ciblée, une fois par jour)
 
 La liste des capacités échangeables contre 5 000 000 de points d'expérience est la suivante:
@@ -195,7 +195,32 @@ La liste des capacités échangeables contre 5 000 000 de points d'expérience e
 	Fort myopie (Portée visuelle limitée à 2', avec une paire de lunettes de myopie offertes gratuitement)
 	Renaissance de l'héritage (Remise à zéro de l'expérience, change de classe et de kit, en conservant les capacités passives et compétences spéciales acquises)
 
+Options supplémentaires avec EEex :
+	Pour 2 000 000 XP :
+	Frappe Perçante (Libère une lame d'énergie qui frappe chaque cible sur son passage avec un jet d'attaque normal, avec un bonus de +10 aux jets de toucher et de dégâts).
+	Jugement Cruciforme (Déchaîne des frappes en croix qui se propagent vers l'extérieur et frappent chaque cible sur leur passage avec un jet d'attaque normal, avec un bonus de +4 aux jets de toucher et de dégâts).
+	Vortex de Lame (Tourbillonnez votre arme autour de vous, frappant toutes les créatures dans un rayon de 7 pieds. Chaque cible subit un jet d'attaque normal unique).
+	Pour 3 000 000 XP :
+	Barricade de Lames (Crée un mur de lames tournoyantes de 9 pieds avec votre arme, durant 3 rounds. Une fois par round, il attaque les créatures proches, résolue comme une attaque normale du lanceur).
+	Pour 4 000 000 XP :
+	Marque du Chasseur (Une cible marquée subit une attaque supplémentaire chaque fois qu'elle est touchée pendant un round, avec un intervalle minimum de 0,4 seconde entre les attaques supplémentaires, résolue comme une attaque normale du lanceur).
+	Frappe Vengeresse (Chaque fois qu'une attaque de mêlée d'un ennemi vous manque, vous ripostez immédiatement contre l'ennemi le plus proche, résolue comme une attaque normale).
+	Gémellité Magique (Tout sort que vous lancez est dupliqué, libérant deux sorts identiques, comme Vague sauvage, et remplace les autres effets de Vague sauvage).
+	Pour 5 000 000 XP :
+	Attaque à deux armes parfaite (Lorsqu'une attaque de mêlée touche un ennemi, gagnez une attaque supplémentaire avec l'arme secondaire par round, ou deux attaques supplémentaires sous Hâte).
+	Ondulation magique (Lors du lancement, le sort affecte aussi toutes les créatures proches de la cible, comme Vague sauvage, et remplace les autres effets de Vague sauvage).
+	Incantation d'Annihilation (Tout sort que vous lancez ignore le jet de sauvegarde de la cible, comme Vague sauvage, et remplace les autres effets de Vague sauvage).
+
 ///////////////////////////Version historique/////////////////////////////
+
+v1.6
+Ajout d'options de compatibilité EEex, offrant des capacités plus intéressantes.
+Ajustement des besoins en expérience pour quelques options.
+
+v1.5
+Correction d’un problème où l’acquisition de certaines capacités empêchait d’obtenir d’autres capacités du même niveau.
+Correction d’un problème où « Renaissance de l’Héritage » ne permettait pas de choisir un kit.
+« Renaissance de l’Héritage » permet désormais de choisir une multiclasse ; cependant, pour éviter tout problème, les personnages ayant déjà changé de classe ou étant en multiclasse ne peuvent pas effectuer la Renaissance de l’Héritage.
 
 v1.4
 Pour des raisons de compatibilité, le préfixe du nom de fichier a été modifié.
@@ -203,7 +228,7 @@ Les compétences disponibles ont été largement ajustées : ajouté une option 
 Le coût en expérience en mode Succession de Bhaal est fixé à 1,5 fois.
 
 v1.3
-Étant donné que certains MODs peuvent modifier le type de maîtrise d'arme, ce MOD récupère désormais automatiquement le nom actuel de la classe d'arme plutôt que le nom fixe de la version originale lors de l'installation.‌
+Étant donné que certains MODs peuvent modifier le type de maîtrise d'arme, ce MOD récupère désormais automatiquement le nom actuel de la classe d'arme plutôt que le nom fixe de la version originale lors de l'installation.
 
 v1.2
 L'option d'installation propose un choix binaire (2 options disponibles).

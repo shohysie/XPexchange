@@ -1,7 +1,7 @@
 BACKUP ~XPexchange/backup~
 AUTHOR ~shohy@126.com~
 
-VERSION ~v1.4~
+VERSION ~v1.6~
 AUTO_EVAL_STRINGS
 
 README ~%MOD_FOLDER%/README.%LANGUAGE%.txt~
@@ -17,6 +17,7 @@ REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ @2	//版本不对
 REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~WISH02.cre~ @3	//没有许愿法术
 SUBCOMPONENT @1
 
+INCLUDE ~%MOD_FOLDER%/lib/xpexchangeeexchk.tph~	//检测有没有安装EEEX，有没有M_Stick.lua并修改文字，有没有M_SYATK.lua，没有就加上
 INCLUDE ~%MOD_FOLDER%/lib/xpexchangefull.tph~
 
 BEGIN @7	//允许兼职转职人物进行交换
@@ -24,6 +25,7 @@ REQUIRE_PREDICATE GAME_IS ~bg2ee eet~ @2	//版本不对
 REQUIRE_PREDICATE FILE_EXISTS_IN_GAME ~WISH02.cre~ @3	//没有许愿法术
 SUBCOMPONENT @1
 
+INCLUDE ~%MOD_FOLDER%/lib/xpexchangeeexchk.tph~
 INCLUDE ~%MOD_FOLDER%/lib/xpexchangefull.tph~
 
 COPY_EXISTING ~WISH01.cre~ ~override~

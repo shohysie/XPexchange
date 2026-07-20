@@ -5,3 +5,6 @@
 @5 = "'Experience Purchaser' should be installed first."
 @6 = "XP exchange restricted to single-class characters only (Recommended)"
 @7 = "Allow XP exchange for multi-class characters (Not recommended as it may disrupt game balance)"
+
+@10000 = "EEex detected. Installing the special module adapted for EEex can enable additional effects such as an extra off-hand attack, but they will not work with Infinity Engine 2.7 and compatibility is not guaranteed.
+Enter 1 to install the special module, or 2 to install normally:"
